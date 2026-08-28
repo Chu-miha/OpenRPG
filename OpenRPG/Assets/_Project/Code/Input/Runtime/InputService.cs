@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
-public class InputService : IMovementInput, ICameraInput, IActionInput
+public class InputService : IMovementInput, ICameraInput, IActionInput, IDisposable, IInitializable
 {
     private readonly InputActions _inputActions;
     
@@ -25,6 +27,18 @@ public class InputService : IMovementInput, ICameraInput, IActionInput
     public void Disable()
     {
         _inputActions.Player.Disable();
+    }
+    
+    public void Initialize()
+    {
+        _inputActions.Enable();
+        Debug.Log("Input Service initialized");
+    }
+
+    public void Dispose()
+    {
+        _inputActions.Disable();
+        Debug.Log("Input Service disposed");
     }
 }
     // //для тестов 
