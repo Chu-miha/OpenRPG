@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class InputService : IMovementInput, ICameraInput, IActionInput, IDisposable, IInitializable
+public class InputService : IMovementInput, ICameraInput, IActionInput, ICameraModeInput, IDisposable, IInitializable
 {
     private readonly InputActions _inputActions;
     
@@ -12,6 +12,7 @@ public class InputService : IMovementInput, ICameraInput, IActionInput, IDisposa
     public bool JumpPressed => _inputActions.Player.Jump.WasPerformedThisFrame();
     public bool AttackPressed => _inputActions.Player.Attack.WasPerformedThisFrame();
     public bool InteractPressed => _inputActions.Player.Interact.WasPerformedThisFrame();
+    public bool SwitchCameraPressed =>  _inputActions.Camera.SwitchCamera.WasPerformedThisFrame();
 
 
     public InputService()
