@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class CameraController : ITickable
+public class CameraController : ITickable , ICameraState
 {
     private readonly Dictionary<CameraModeType, ICameraMode> _cameraModes;
     private ICameraMode _currentMode;
     private readonly ICameraModeInput _cameraModeInput;
+    private readonly CameraTransition _cameraTransition;
 
     public ICameraMode CurrentMode => _currentMode;
 
-    public CameraController(List<ICameraMode> cameraModes, CameraModeType defaultMode, ICameraModeInput cameraModeInput)
+    public CameraController(List<ICameraMode> cameraModes, CameraModeType defaultMode, ICameraModeInput cameraModeInput, CameraTransition cameraTransition)
     {
         _cameraModes = new Dictionary<CameraModeType, ICameraMode>();
 
@@ -20,6 +21,8 @@ public class CameraController : ITickable
             _cameraModes.Add(mode.Type, mode);
         }
         _cameraModeInput = cameraModeInput;
+        
+        _cameraTransition = cameraTransition;
         
         SetMode(defaultMode);
     }
@@ -64,8 +67,22 @@ public class CameraController : ITickable
         if (!_cameraModeInput.SwitchCameraPressed)
             return;
 
-        CameraModeType nextMode = _currentMode.Type == CameraModeType.FirstPerson ? CameraModeType.ThirdPerson : CameraModeType.FirstPerson;
+        if (_cameraTransition.IsRunning)
+            return;
 
-        SetMode(nextMode);
+        if (_currentMode.Type == CameraModeType.FirstPerson)
+        {
+            _cameraTransition.ToThirdPerson(() =>
+            {
+                SetMode(CameraModeType.ThirdPerson);
+            });
+
+            return;
+        }
+
+        _cameraTransition.ToFirstPerson(() =>
+        {
+            SetMode(CameraModeType.FirstPerson);
+        });
     }
 }

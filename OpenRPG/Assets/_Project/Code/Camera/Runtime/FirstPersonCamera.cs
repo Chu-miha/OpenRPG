@@ -17,6 +17,7 @@ public class FirstPersonCamera : MonoBehaviour, ICameraMode
     public CameraModeType Type => CameraModeType.FirstPerson;
     public Vector3 Position => transform.position;
     public Vector3 Forward => transform.forward;
+    
 
     [Inject]
     private void Construct(ICameraInput cameraInput, ICameraTarget cameraTarget, IPlayerRotation playerRotation)
@@ -36,10 +37,7 @@ public class FirstPersonCamera : MonoBehaviour, ICameraMode
         float yaw = look.x * sensitivity;
         _pitch -= look.y * sensitivity;
 
-        _pitch = Mathf.Clamp(
-            _pitch,
-            minPitch,
-            maxPitch);
+        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
 
         _playerRotation.Rotate(yaw);
     }

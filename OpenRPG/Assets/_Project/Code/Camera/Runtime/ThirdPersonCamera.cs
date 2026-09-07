@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,8 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
     [SerializeField] private float distance = 5f;
     [SerializeField] private float minPitch = -30f;
     [SerializeField] private float maxPitch = 70f;
+    [SerializeField] private float transitionDuration = 0.35f;
+
     
     private ICameraInput _cameraInput;
     private ICameraTarget _cameraTarget;
@@ -14,12 +17,26 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
     private float _yaw;
     private float _pitch;
     private bool _active;
+    private float _defaultDistance;
     
     public CameraModeType Type => CameraModeType.ThirdPerson;
     public Vector3 Position => transform.position;
     public Vector3 Forward => transform.forward;
+    public float DefaultDistance => _defaultDistance;
+    public float TransitionDuration => transitionDuration;
+    public float Distance
+    {
+        get => distance;
+        set => distance = value;
+    }
+    
 
-    [Inject]
+   private void Awake()
+   {
+       _defaultDistance = distance;
+   }
+
+   [Inject]
     private void Construct(ICameraInput cameraInput, ICameraTarget cameraTarget)
     {
         _cameraInput = cameraInput;
@@ -38,16 +55,7 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
 
         _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
 
-        Quaternion rotation =
-            Quaternion.Euler(_pitch, _yaw, 0f);
-
-        Vector3 offset =
-            rotation * Vector3.back * distance;
-
-        transform.position =
-            _cameraTarget.Position + offset;
-        
-        transform.rotation = rotation;
+        UpdateCameraPosition();
 
     }
     
@@ -60,5 +68,21 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
     public void Deactivate()
     {
         _active = false;
+    }
+    
+    public void PrepareTransition()
+    {
+        _active = true;
+    }
+
+    public void UpdateCameraPosition()
+    {
+        Quaternion rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+
+        Vector3 offset = rotation * Vector3.back * distance;
+
+        transform.position = _cameraTarget.Position + offset;
+        
+        transform.rotation = rotation;
     }
 }

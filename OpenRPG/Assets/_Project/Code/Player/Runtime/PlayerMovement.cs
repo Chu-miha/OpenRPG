@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour, IPlayerMovement, IPlayerRotation
+public class PlayerMovement : MonoBehaviour, IPlayerMovement
 {
     [SerializeField]
     private float moveSpeed = 5f;
@@ -47,9 +47,5 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement, IPlayerRotation
         
         _characterController.Move(Velocity * Time.deltaTime);
     }
-
-    public void Rotate(float yaw)
-    {
-        transform.Rotate(0f, yaw, 0f);
-    }
+    
 }

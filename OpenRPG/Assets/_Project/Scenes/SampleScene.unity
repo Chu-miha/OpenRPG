@@ -352,6 +352,7 @@ MonoBehaviour:
   distance: 5
   minPitch: 0
   maxPitch: 70
+  transitionDuration: 0.35
 --- !u!114 &330585550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +668,7 @@ GameObject:
   - component: {fileID: 675803436}
   - component: {fileID: 675803435}
   - component: {fileID: 675803434}
+  - component: {fileID: 675803442}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -832,6 +834,19 @@ Transform:
   - {fileID: 482645250}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &675803442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675803433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd2b4e450d33d54d8be09ec0d00c306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RPG.Player::PlayerRotation
+  rotationSpeed: 10
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

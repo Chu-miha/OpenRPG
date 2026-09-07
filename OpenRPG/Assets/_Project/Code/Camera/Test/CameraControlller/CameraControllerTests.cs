@@ -9,6 +9,7 @@ public class CameraControllerTests
   private List<ICameraMode> modes;
   private CameraController controller;
   private FakeCameraModeInput cameraInput;
+  private CameraTransition cameraTransition;
 
   [SetUp]
   public void Setup()
@@ -22,7 +23,7 @@ public class CameraControllerTests
       thirdPerson
     };
     
-   controller = new CameraController(modes, CameraModeType.FirstPerson, cameraInput );
+   controller = new CameraController(modes, CameraModeType.FirstPerson, cameraInput,cameraTransition );
   }
   
   [Test]
@@ -119,7 +120,7 @@ public class CameraControllerTests
       {
         firstPerson,
         thirdPerson
-      }, CameraModeType.FirstPerson, cameraInput);
+      }, CameraModeType.FirstPerson, cameraInput, cameraTransition);
   
     controller.SetMode<FakeThirdPersonCamera>();
   

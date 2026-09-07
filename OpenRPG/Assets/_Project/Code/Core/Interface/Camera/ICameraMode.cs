@@ -6,6 +6,8 @@ public interface ICameraMode
     Vector3 Position { get; }
     Vector3 Forward { get; }
     
+   
+    
     void Activate();
     void Deactivate();
 }

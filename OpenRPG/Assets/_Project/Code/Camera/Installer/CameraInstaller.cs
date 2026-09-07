@@ -35,5 +35,9 @@ public class CameraInstaller : MonoInstaller
             .To<CameraMovementDirection>()
             .AsSingle();
         
+        Container
+            .Bind<CameraTransition>()
+            .AsSingle();
+        
     }
 }

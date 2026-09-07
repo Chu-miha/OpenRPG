@@ -9,6 +9,11 @@ public class PlayerInstaller : MonoInstaller
             .FromComponentsInHierarchy()
             .AsSingle();
         
+        Container
+            .BindInterfacesTo<PlayerRotation>()
+            .FromComponentsInHierarchy()
+            .AsSingle();
+        
         Container.Bind<Player>()
             .FromComponentInHierarchy()
             .AsSingle();

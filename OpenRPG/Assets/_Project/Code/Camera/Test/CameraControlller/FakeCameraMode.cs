@@ -13,6 +13,8 @@ public class FakeCameraMode : ICameraMode
     public Vector3 Position => Vector3.zero;
     public Vector3 Forward => Vector3.forward;
 
+    public float AngelY => 10f;
+
     public FakeCameraMode(CameraModeType type)
     {
         Type = type;
