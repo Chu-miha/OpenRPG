@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class CameraTransition
+public class CameraTransition : ICameraTransition
 {
     private readonly FirstPersonCamera _firstPersonCamera;
     private readonly ThirdPersonCamera _thirdPersonCamera;
@@ -50,6 +50,7 @@ public class CameraTransition
         _thirdPersonCamera.Distance = 0f;
 
         _firstPersonCamera.Deactivate();
+        _thirdPersonCamera.SetOrbit();
         _thirdPersonCamera.Activate();
 
         _transitionTween = DOTween.To(

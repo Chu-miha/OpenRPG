@@ -6,10 +6,10 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
 {
     [SerializeField] private float sensitivity = 2f;
     [SerializeField] private float distance = 5f;
+    [SerializeField] private float defaultPitch = 20f;
     [SerializeField] private float minPitch = -30f;
     [SerializeField] private float maxPitch = 70f;
     [SerializeField] private float transitionDuration = 0.35f;
-
     
     private ICameraInput _cameraInput;
     private ICameraTarget _cameraTarget;
@@ -70,11 +70,6 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
         _active = false;
     }
     
-    public void PrepareTransition()
-    {
-        _active = true;
-    }
-
     public void UpdateCameraPosition()
     {
         Quaternion rotation = Quaternion.Euler(_pitch, _yaw, 0f);
@@ -85,4 +80,13 @@ public class ThirdPersonCamera : MonoBehaviour, ICameraMode
         
         transform.rotation = rotation;
     }
+    
+    public void SetOrbit()
+    {
+        Vector3 direction = _cameraTarget.Rotation * Vector3.forward;
+
+        _yaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        _pitch = defaultPitch;
+    }
+    
 }

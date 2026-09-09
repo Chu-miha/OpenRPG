@@ -8,11 +8,11 @@ public class CameraController : ITickable , ICameraState
     private readonly Dictionary<CameraModeType, ICameraMode> _cameraModes;
     private ICameraMode _currentMode;
     private readonly ICameraModeInput _cameraModeInput;
-    private readonly CameraTransition _cameraTransition;
+    private readonly ICameraTransition _cameraTransition;
 
     public ICameraMode CurrentMode => _currentMode;
 
-    public CameraController(List<ICameraMode> cameraModes, CameraModeType defaultMode, ICameraModeInput cameraModeInput, CameraTransition cameraTransition)
+    public CameraController(List<ICameraMode> cameraModes, CameraModeType defaultMode, ICameraModeInput cameraModeInput, ICameraTransition cameraTransition)
     {
         _cameraModes = new Dictionary<CameraModeType, ICameraMode>();
 

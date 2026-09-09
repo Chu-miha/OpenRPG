@@ -36,7 +36,8 @@ public class CameraInstaller : MonoInstaller
             .AsSingle();
         
         Container
-            .Bind<CameraTransition>()
+            .Bind<ICameraTransition>()
+            .To<CameraTransition>()
             .AsSingle();
         
     }
