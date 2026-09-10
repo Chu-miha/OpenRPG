@@ -350,6 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RPG.Camera::ThirdPersonCamera
   sensitivity: 0.5
   distance: 5
+  defaultPitch: 20
   minPitch: 0
   maxPitch: 70
   transitionDuration: 0.35
@@ -688,6 +689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 942d1e1b3392b63449cfe6edefc3f910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RPG.Player::PlayerInstaller
+  playerDataStat: {fileID: 11400000, guid: 10ca399a8b8887147900f520e944f843, type: 2}
 --- !u!114 &675803435
 MonoBehaviour:
   m_ObjectHideFlags: 0

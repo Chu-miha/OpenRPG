@@ -3,6 +3,7 @@ using Zenject;
 
 public class PlayerInstaller : MonoInstaller
 {
+    [SerializeField] private PlayerDataStat playerDataStat;
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<PlayerMovement>()
@@ -13,6 +14,10 @@ public class PlayerInstaller : MonoInstaller
             .BindInterfacesTo<PlayerRotation>()
             .FromComponentsInHierarchy()
             .AsSingle();
+        
+        Container.Bind<PlayerStats>()
+            .AsSingle()
+            .WithArguments(playerDataStat);
         
         Container.Bind<Player>()
             .FromComponentInHierarchy()
