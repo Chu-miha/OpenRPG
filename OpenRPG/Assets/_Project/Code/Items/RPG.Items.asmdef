@@ -1,0 +1,16 @@
+{
+    "name": "RPG.Items",
+    "rootNamespace": "",
+    "references": [
+        "GUID:43394b9b256a0914b86dd5230a90c5f1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
