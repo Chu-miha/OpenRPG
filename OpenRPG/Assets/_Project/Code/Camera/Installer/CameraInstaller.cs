@@ -40,5 +40,10 @@ public class CameraInstaller : MonoInstaller
             .To<CameraTransition>()
             .AsSingle();
         
+        Container
+            .Bind<ICameraRaycast>()
+            .To<CameraRaycast>()
+            .AsSingle();
+        
     }
 }

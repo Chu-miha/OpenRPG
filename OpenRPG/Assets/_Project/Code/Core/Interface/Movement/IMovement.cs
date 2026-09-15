@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IPlayerMovement
+public interface IMovement
 {
     Vector3 Velocity { get; }
     bool IsGrounded { get; }

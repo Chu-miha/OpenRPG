@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour, IPlayerMovement
+public class PlayerMovement : MonoBehaviour, IMovement
 {
     [SerializeField]
     private float moveSpeed = 5f;

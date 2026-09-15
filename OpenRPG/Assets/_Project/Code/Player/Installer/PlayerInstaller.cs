@@ -22,5 +22,19 @@ public class PlayerInstaller : MonoInstaller
         Container.Bind<Player>()
             .FromComponentInHierarchy()
             .AsSingle();
+        
+        Container
+            .Bind<FirstPersonInteractionDetector>()
+            .AsSingle();
+
+        Container
+            .Bind<ThirdPersonInteractionDetector>()
+            .AsSingle();
+
+        Container
+            .Bind<IInteractionDetector>()
+            .To<PlayerInteractionDetector>()
+            .AsSingle();
+        
     }
 }

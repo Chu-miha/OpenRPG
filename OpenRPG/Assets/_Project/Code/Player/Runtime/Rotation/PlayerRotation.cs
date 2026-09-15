@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PlayerRotation : MonoBehaviour, IPlayerRotation
+public class PlayerRotation : MonoBehaviour, IRotation
 {
     [SerializeField] private float rotationSpeed = 10f;
     

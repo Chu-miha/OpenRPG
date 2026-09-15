@@ -10,7 +10,7 @@ public class FirstPersonCamera : MonoBehaviour, ICameraMode
     
     private ICameraInput _cameraInput;
     private ICameraTarget _cameraTarget;
-    private IPlayerRotation _playerRotation;
+    private IRotation _playerRotation;
     private float _pitch;
     private bool _active;
     
@@ -20,7 +20,7 @@ public class FirstPersonCamera : MonoBehaviour, ICameraMode
     
 
     [Inject]
-    private void Construct(ICameraInput cameraInput, ICameraTarget cameraTarget, IPlayerRotation playerRotation)
+    private void Construct(ICameraInput cameraInput, ICameraTarget cameraTarget, IRotation playerRotation)
     {
         _cameraInput = cameraInput;
         _cameraTarget = cameraTarget;
