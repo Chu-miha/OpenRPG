@@ -9,16 +9,16 @@ public class InteractionController
         _detector = detector;
     }
     
-    public void Interact(IInteractor interactor)
+    public IInteractable Interact(IInteractor interactor)
     {
         IInteractable interactable = _detector.Detect(interactor);
 
         if (interactable == null)
-            return;
+            return null;
 
         if (!interactable.CanInteract(interactor))
-            return;
+            return null;
 
-        interactable.Interact(interactor);
+        return interactable;
     }
 }

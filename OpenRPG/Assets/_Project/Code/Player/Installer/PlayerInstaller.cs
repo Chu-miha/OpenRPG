@@ -36,5 +36,9 @@ public class PlayerInstaller : MonoInstaller
             .To<PlayerInteractionDetector>()
             .AsSingle();
         
+        Container.Bind<IInventoryFactory>()
+            .To<InventoryFactory>()
+            .AsSingle();
+        
     }
 }

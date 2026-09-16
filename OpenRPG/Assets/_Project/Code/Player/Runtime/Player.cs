@@ -5,6 +5,7 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
 {
     public IMovement Movement { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
+    public IInventory Inventory { get; private set; }
     
     public ResourceStat Health => PlayerStats.Health;
     public ResourceStat Mana => PlayerStats.Mana;
@@ -14,12 +15,13 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private InteractionController _interactionController;
 
     [Inject]
-    private void Construct(IMovement movement, PlayerStats playerStats, IActionInput actionInput, InteractionController interactionController)
+    private void Construct(IMovement movement, PlayerStats playerStats, IActionInput actionInput, InteractionController interactionController, IInventoryFactory inventoryFactory)
     {
         Movement = movement;
         PlayerStats = playerStats;
         _actionInput = actionInput;
         _interactionController = interactionController;
+        Inventory = inventoryFactory.Create();
         
     }
     
@@ -34,6 +36,11 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         if (!_actionInput.InteractPressed)
             return;
 
-        _interactionController.Interact(this);
+        IInteractable interactable = _interactionController.Interact(this);
+
+        if (interactable == null)
+            return;
+
+        interactable.Interact(this);
     }
 }
