@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 288864119}
   - component: {fileID: 288864118}
   - component: {fileID: 288864117}
-  - component: {fileID: 288864116}
+  - component: {fileID: 288864122}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -140,18 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &288864116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288864115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2ee74eb8bb04243b4ee113d0c0a171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: RPG.Items::TestInteractable
 --- !u!54 &288864117
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -272,6 +260,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &288864122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288864115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475e2404874be5d4094ee50cf64e9254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RPG.Items::ItemPickup
+  <Item>k__BackingField: {fileID: 11400000, guid: 1da4ab7362d99fd4caf96c96ea17f67f, type: 2}
 --- !u!1 &291585156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1079,7 @@ GameObject:
   - component: {fileID: 1109637058}
   - component: {fileID: 1109637057}
   - component: {fileID: 1109637056}
-  - component: {fileID: 1109637055}
+  - component: {fileID: 1109637061}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1086,18 +1087,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1109637055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109637054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2ee74eb8bb04243b4ee113d0c0a171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: RPG.Items::TestInteractable
 --- !u!54 &1109637056
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1218,6 +1207,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1109637061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109637054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475e2404874be5d4094ee50cf64e9254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RPG.Items::ItemPickup
+  <Item>k__BackingField: {fileID: 11400000, guid: 1da4ab7362d99fd4caf96c96ea17f67f, type: 2}
 --- !u!1 &1170783661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1233,7 @@ GameObject:
   - component: {fileID: 1170783665}
   - component: {fileID: 1170783664}
   - component: {fileID: 1170783663}
-  - component: {fileID: 1170783662}
+  - component: {fileID: 1170783668}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -1239,18 +1241,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1170783662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170783661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2ee74eb8bb04243b4ee113d0c0a171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: RPG.Items::TestInteractable
 --- !u!54 &1170783663
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1371,6 +1361,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1170783668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170783661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475e2404874be5d4094ee50cf64e9254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RPG.Items::ItemPickup
+  <Item>k__BackingField: {fileID: 11400000, guid: 1da4ab7362d99fd4caf96c96ea17f67f, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

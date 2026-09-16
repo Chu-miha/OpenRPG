@@ -1,12 +1,11 @@
 {
-    "name": "NewAssembly",
+    "name": "RPG.Inventory.Test",
     "rootNamespace": "",
     "references": [
+        "GUID:f3ef3742b9c8702488c3f0524aba3bd6",
         "GUID:08c6a13a8b298444f960c47cb1261fc4"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

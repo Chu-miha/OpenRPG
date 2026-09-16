@@ -40,6 +40,12 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
 
         if (interactable == null)
             return;
+        
+        if (interactable is IPickable pickable)
+        {
+            if (!Inventory.Add(pickable.Item))
+                return;
+        }
 
         interactable.Interact(this);
     }
