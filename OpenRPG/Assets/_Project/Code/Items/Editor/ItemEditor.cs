@@ -11,7 +11,7 @@ public class ItemEditor : Editor
 
     private void OnEnable()
     {
-        _effects = serializedObject.FindProperty("<Effects>k__BackingField");
+        _effects = serializedObject.FindProperty("_effects");
     }
 
     public override void OnInspectorGUI()
@@ -20,7 +20,7 @@ public class ItemEditor : Editor
 
         DrawPropertiesExcluding(
             serializedObject,
-            "<Effects>k__BackingField"
+            "_effects"
         );
 
         EditorGUILayout.Space();
@@ -28,9 +28,27 @@ public class ItemEditor : Editor
 
         for (int i = 0; i < _effects.arraySize; i++)
         {
-            EditorGUILayout.PropertyField(
-                _effects.GetArrayElementAtIndex(i)
-            );
+            SerializedProperty effect =
+                _effects.GetArrayElementAtIndex(i);
+
+            EditorGUILayout.BeginHorizontal();
+
+            EditorGUILayout.PropertyField(effect);
+
+            if (GUILayout.Button("×", GUILayout.Width(20)))
+            {
+                UnityEngine.Object effectObject =
+                    effect.objectReferenceValue;
+                
+                AssetDatabase.RemoveObjectFromAsset(effectObject);
+                
+                _effects.DeleteArrayElementAtIndex(i);
+                
+                AssetDatabase.SaveAssets();
+            }
+
+            EditorGUILayout.EndHorizontal();
+            
         }
 
         if (GUILayout.Button("Add Effect"))

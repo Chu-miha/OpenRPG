@@ -40,5 +40,13 @@ public class PlayerInstaller : MonoInstaller
             .To<InventoryFactory>()
             .AsSingle();
         
+        Container
+            .Bind<PlayerInventory>()
+            .AsSingle();
+        
+        Container
+            .Bind<PlayerInteraction>()
+            .AsSingle();
+        
     }
 }

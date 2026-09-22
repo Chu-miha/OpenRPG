@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -5,23 +6,27 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
 {
     public IMovement Movement { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
-    public IInventory Inventory { get; private set; }
     
     public ResourceStat Health => PlayerStats.Health;
     public ResourceStat Mana => PlayerStats.Mana;
     public Transform Transform => transform;
     
     private IActionInput _actionInput;
-    private InteractionController _interactionController;
+    private PlayerInteraction _playerInteraction;
+    private PlayerInventory _playerInventory;
 
     [Inject]
-    private void Construct(IMovement movement, PlayerStats playerStats, IActionInput actionInput, InteractionController interactionController, IInventoryFactory inventoryFactory)
+    private void Construct(IMovement movement,
+        PlayerStats playerStats,
+        IActionInput actionInput,
+        PlayerInteraction playerInteraction,
+        PlayerInventory playerInventory)
     {
         Movement = movement;
         PlayerStats = playerStats;
         _actionInput = actionInput;
-        _interactionController = interactionController;
-        Inventory = inventoryFactory.Create();
+        _playerInteraction = playerInteraction;
+        _playerInventory = playerInventory;
         
     }
     
@@ -35,18 +40,13 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     {
         if (!_actionInput.InteractPressed)
             return;
-
-        IInteractable interactable = _interactionController.Interact(this);
-
-        if (interactable == null)
-            return;
-        
+       
+        IInteractable interactable = _playerInteraction.PlayerInteract(this);
         if (interactable is IPickable pickable)
         {
-            if (!Inventory.Add(pickable.Item))
+            if(!_playerInventory.AddItemToInventory(pickable.Item))
                 return;
         }
-
         interactable.Interact(this);
     }
 }

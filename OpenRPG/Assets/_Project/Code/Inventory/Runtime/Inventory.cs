@@ -15,7 +15,6 @@ public class Inventory : IInventory
             stack.Add(amount);
             return true;
         }
-
         _items.Add(item.Id, new ItemStack(item, amount));
         return true;
     }
