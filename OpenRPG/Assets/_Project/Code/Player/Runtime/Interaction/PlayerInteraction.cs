@@ -12,10 +12,6 @@ public class PlayerInteraction
 
     public IInteractable PlayerInteract(IInteractor interactor)
     {
-        IInteractable interactable = _interactionController.Interact(interactor);
-
-        if (interactable == null) throw new NullReferenceException();
-        
-        return interactable;
+        return _interactionController.Interact(interactor);
     }
 }

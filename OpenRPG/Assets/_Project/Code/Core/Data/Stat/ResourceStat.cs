@@ -6,12 +6,10 @@ public class ResourceStat : Stat
     public int MinValue { get; private set; }
     public int MaxValue { get; private set; }
     
-    public ResourceStat(int currentValue, int maxValue, int minValue = 0)
+    public ResourceStat(int currentValue, int maxValue, int minValue = 0) : base(Math.Clamp(currentValue, minValue, maxValue))
     {
         MinValue = minValue;
         MaxValue = maxValue;
-
-        Value = Math.Clamp(currentValue, MinValue, MaxValue);
     }
     
     public override void SetValue(int value)
@@ -21,8 +19,7 @@ public class ResourceStat : Stat
         if (newValue == Value)
             return;
 
-        Value = newValue;
-        NotifyValueChanged();
+        ValueProperty.Value = newValue;
     }
 
     public override void Modify(int amount)

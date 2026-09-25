@@ -1,19 +1,20 @@
 using System;
+using UniRx;
 using UnityEngine;
 
 public abstract class Stat : IStat
 {
-    public int Value { get; protected set; }
-    
-    public event Action<int> ValueChanged;
+    protected readonly ReactiveProperty<int> ValueProperty;
+
+    public int Value => ValueProperty.Value;
+    public IReadOnlyReactiveProperty<int> ReactiveValue => ValueProperty;
+
+    protected Stat(int value)
+    {
+        ValueProperty = new ReactiveProperty<int>(value);
+    }
 
     public abstract void SetValue(int value);
     public abstract void Modify(int amount);
-    
-    protected void NotifyValueChanged()
-    {
-        ValueChanged?.Invoke(Value);
-    }
-
 
 }

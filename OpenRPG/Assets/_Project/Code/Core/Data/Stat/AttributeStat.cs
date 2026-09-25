@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class AttributeStat : Stat
 {
-    public AttributeStat(int value)
+    public AttributeStat(int value) : base(value)
     {
-        Value = value;
     }
 
     public override void SetValue(int value)
@@ -12,8 +11,7 @@ public class AttributeStat : Stat
         if (Value == value)
             return;
 
-        Value = value;
-        NotifyValueChanged();
+        ValueProperty.Value = value;
     }
 
     public override void Modify(int amount)

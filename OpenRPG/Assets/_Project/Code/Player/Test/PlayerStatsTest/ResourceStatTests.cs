@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using UniRx;
 using UnityEngine;
 
 public class ResourceStatTests
@@ -64,25 +65,43 @@ public class ResourceStatTests
     [Test]
     public void ValueChanged_WhenValueChanges_IsInvoked()
     {
-        bool eventRaised = false;
+        bool valueChanged = false;
 
-        _stat.ValueChanged += _ => eventRaised = true;
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(_ => valueChanged = true);
 
         _stat.Modify(10);
 
-        Assert.That(eventRaised, Is.True);
+        Assert.That(valueChanged, Is.True);
     }
 
     [Test]
     public void ValueChanged_WhenValueDoesNotChange_IsNotInvoked()
     {
-        bool eventRaised = false;
+        bool valueChanged = false;
 
-        _stat.ValueChanged += _ => eventRaised = true;
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(_ => valueChanged = true);
 
-        _stat.SetValue(50);
+        _stat.Modify(10);
 
-        Assert.That(eventRaised, Is.False);
+        Assert.That(valueChanged, Is.True);
+    }
+    
+    [Test]
+    public void ReactiveValue_WhenModifyChangesValue_PassesNewValue()
+    {
+        int receivedValue = 0;
+
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(value => receivedValue = value);
+
+        _stat.Modify(10);
+
+        Assert.That(receivedValue, Is.EqualTo(60));
     }
 
     [TestCase(0, 10, 10)]

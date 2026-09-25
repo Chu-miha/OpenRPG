@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 using UnityEngine;
 
 public interface IStat
@@ -8,5 +9,5 @@ public interface IStat
     void SetValue(int value);
     void Modify(int amount);
 
-    event Action<int> ValueChanged;
+    IReadOnlyReactiveProperty<int> ReactiveValue { get; }
 }

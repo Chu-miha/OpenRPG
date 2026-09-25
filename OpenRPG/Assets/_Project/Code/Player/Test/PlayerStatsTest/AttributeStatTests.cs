@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using UniRx;
 using UnityEngine;
+
 
 public class AttributeStatTests
 {
@@ -58,35 +60,41 @@ public class AttributeStatTests
     }
 
     [Test]
-    public void ValueChanged_WhenValueChanges_IsInvoked()
+    public void ReactiveValue_WhenValueChanges_IsInvoked()
     {
-        bool eventRaised = false;
+        bool valueChanged  = false;
 
-        _stat.ValueChanged += _ => eventRaised = true;
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(_ => valueChanged = true);
 
         _stat.SetValue(75);
 
-        Assert.That(eventRaised, Is.True);
+        Assert.That(valueChanged, Is.True);
     }
 
     [Test]
-    public void ValueChanged_WhenValueDoesNotChange_IsNotInvoked()
+    public void ReactiveValue_WhenValueDoesNotChange_IsNotInvoked()
     {
-        bool eventRaised = false;
+        bool valueChanged = false;
 
-        _stat.ValueChanged += _ => eventRaised = true;
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(_ => valueChanged = true);
 
         _stat.SetValue(50);
 
-        Assert.That(eventRaised, Is.False);
+        Assert.That(valueChanged, Is.False);
     }
 
     [Test]
-    public void ValueChanged_PassesNewValue()
+    public void ReactiveValue_PassesNewValue()
     {
         int receivedValue = 0;
 
-        _stat.ValueChanged += value => receivedValue = value;
+        _stat.ReactiveValue
+            .Skip(1)
+            .Subscribe(value => receivedValue = value);
 
         _stat.SetValue(75);
 
