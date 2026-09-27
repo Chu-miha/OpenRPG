@@ -1,0 +1,42 @@
+VisualElement {
+}
+
+.resource-bar {
+}
+
+.resource-bar_background {
+    background-color: rgb(21, 23, 26);
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.resource-bar_fill {
+    background-color: rgb(181, 42, 42);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.mana-bar_fill {
+    background-color: rgb(45, 140, 255);
+}
+
+.stamina-bar_fill {
+    background-color: rgb(69, 201, 107);
+}
+
+.health-bar_fill {
+    background-color: rgb(181, 42, 42);
+}
+

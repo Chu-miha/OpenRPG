@@ -1,0 +1,25 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/PlayerHUD/PlayerHUD.uss?fileID=7433441132597879392&amp;guid=b80072819f44c694a9bed1405e652682&amp;type=3#PlayerHUD"/>
+    <ui:VisualElement name="Root" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="BottomHUD" style="flex-grow: 1; flex-direction: row; position: absolute; left: 5%; right: 5%; bottom: 4%; height: 90px; align-items: center; justify-content: space-between;">
+            <ui:VisualElement name="HealthBar" class="resource-bar" style="flex-grow: 1; height: 32px; margin-right: 40px;">
+                <ui:VisualElement name="Background" class="resource-bar_background" style="flex-grow: 1; height: 32px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px;">
+                    <ui:VisualElement name="Fill" class="resource-bar_fill health-bar_fill" style="flex-grow: 1; position: relative; top: 0; left: 0; bottom: 0; right: auto; width: 100%; height: 100px;"/>
+                </ui:VisualElement>
+                <ui:Label text="100/100" name="Value" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; font-size: 14px; color: rgb(255, 255, 255); -unity-text-align: middle-center;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="ManaBar" class="resource-bar" style="flex-grow: 1; height: 32px; margin-right: 40px; margin-left: 40px;">
+                <ui:VisualElement name="Background" class="resource-bar_background" style="flex-grow: 1; height: 32px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px;">
+                    <ui:VisualElement name="Fill" class="resource-bar_fill mana-bar_fill" style="flex-grow: 1; position: relative; top: 0; left: 0; bottom: 0; right: auto; width: 100%; height: 100px;"/>
+                </ui:VisualElement>
+                <ui:Label text="100/100" name="Value" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; font-size: 14px; color: rgb(255, 255, 255); -unity-text-align: middle-center;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="StaminaBar" class="resource-bar" style="flex-grow: 1; height: 32px; margin-left: 40px;">
+                <ui:VisualElement name="Background" class="resource-bar_background" style="flex-grow: 1; height: 32px; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px;">
+                    <ui:VisualElement name="Fill" class="resource-bar_fill stamina-bar_fill" style="flex-grow: 1; position: relative; top: 0; left: 0; bottom: 0; right: auto; width: 100%; height: 100px;"/>
+                </ui:VisualElement>
+                <ui:Label text="100/100" name="Value" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; font-size: 14px; color: rgb(255, 255, 255); -unity-text-align: middle-center;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
