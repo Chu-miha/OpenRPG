@@ -38,6 +38,8 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     
     private void Update()
     {
+        _playerInteraction.UpdateTarget(this);
+        
         if (!_actionInput.InteractPressed)
             return;
        
