@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475e2404874be5d4094ee50cf64e9254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RPG.Items::ItemPickup
-  <Item>k__BackingField: {fileID: 11400000, guid: 1da4ab7362d99fd4caf96c96ea17f67f, type: 2}
+  <Item>k__BackingField: {fileID: 11400000, guid: b24c46e05cae0524aad4c5a3d35ea1f6, type: 2}
 --- !u!1 &2030712113
 GameObject:
   m_ObjectHideFlags: 0

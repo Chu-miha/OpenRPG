@@ -22,8 +22,6 @@ public class Item : ScriptableObject
     [field: SerializeField]
     public int Price { get; private set; }
 
-    // [field: SerializeField]
-    // public ItemEffect[] Effects { get; private set; }
     [SerializeField]
     private ItemEffect[] _effects;
     public ItemEffect[] Effects => _effects;

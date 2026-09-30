@@ -48,5 +48,8 @@ public class PlayerInstaller : MonoInstaller
             .Bind<PlayerInteraction>()
             .AsSingle();
         
+        Container.Bind<PlayerItemUsage>()
+            .AsSingle();
+        
     }
 }

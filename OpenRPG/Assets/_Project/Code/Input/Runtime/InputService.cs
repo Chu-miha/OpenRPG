@@ -12,6 +12,8 @@ public class InputService : IMovementInput, ICameraInput, IActionInput, ICameraM
     public bool JumpPressed => _inputActions.Player.Jump.WasPerformedThisFrame();
     public bool AttackPressed => _inputActions.Player.Attack.WasPerformedThisFrame();
     public bool InteractPressed => _inputActions.Player.Interact.WasPerformedThisFrame();
+    public bool UseFirstQuickSlot => _inputActions.Player.FirstQuickSlot.WasPerformedThisFrame();
+    public bool UseSecondQuickSlot => _inputActions.Player.SecondQuickSlot.WasPerformedThisFrame();
     public bool SwitchCameraPressed =>  _inputActions.Camera.SwitchCamera.WasPerformedThisFrame();
 
 

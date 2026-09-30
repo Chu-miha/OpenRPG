@@ -14,19 +14,22 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private IActionInput _actionInput;
     private PlayerInteraction _playerInteraction;
     private PlayerInventory _playerInventory;
+    private PlayerItemUsage _playerItemUsage;
 
     [Inject]
     private void Construct(IMovement movement,
         PlayerStats playerStats,
         IActionInput actionInput,
         PlayerInteraction playerInteraction,
-        PlayerInventory playerInventory)
+        PlayerInventory playerInventory,
+        PlayerItemUsage playerItemUsage)
     {
         Movement = movement;
         PlayerStats = playerStats;
         _actionInput = actionInput;
         _playerInteraction = playerInteraction;
         _playerInventory = playerInventory;
+        _playerItemUsage = playerItemUsage;
         
     }
     
@@ -39,6 +42,8 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private void Update()
     {
         _playerInteraction.UpdateTarget(this);
+
+        HandleItemUsage();
         
         if (!_actionInput.InteractPressed)
             return;
@@ -52,5 +57,18 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
                 return;
         }
         interactable.Interact(this);
+    }
+    
+    private void HandleItemUsage()
+    {
+        if (_actionInput.UseFirstQuickSlot)
+        {
+            _playerItemUsage.UseQuickItem(0, this);
+        }
+
+        if (_actionInput.UseSecondQuickSlot)
+        {
+            _playerItemUsage.UseQuickItem(1, this);
+        }
     }
 }

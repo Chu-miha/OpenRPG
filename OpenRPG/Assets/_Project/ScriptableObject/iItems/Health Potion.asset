@@ -32,4 +32,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c232bdd00ee595246878e4cd9e6877aa, type: 3}
   m_Name: HealEffect
   m_EditorClassIdentifier: RPG.Items::HealEffect
-  <Amount>k__BackingField: 15
+  <Amount>k__BackingField: -15
