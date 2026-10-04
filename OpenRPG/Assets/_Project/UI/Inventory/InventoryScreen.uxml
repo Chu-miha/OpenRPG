@@ -1,0 +1,24 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Inventory/InventoryScreen.uss?fileID=7433441132597879392&amp;guid=5f6120a42e286714d9aeba12302e944c&amp;type=3#InventoryScreen"/>
+    <ui:VisualElement name="InventoryRoot" style="flex-grow: 1; display: none;">
+        <ui:VisualElement name="DimBackground" class="dim-background" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.61);"/>
+        <ui:VisualElement name="InventoryPanel" class="inventory-panel" style="flex-grow: 1;">
+            <ui:VisualElement name="InventoryHeader" class="inventory-header" style="flex-grow: 0; height: 60px; flex-shrink: 0; flex-direction: column;">
+                <ui:Label text="INVENTORY" name="Title" class="inventory-title"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="MainContent" class="main-content" style="flex-grow: 1; height: auto;">
+                <ui:VisualElement name="QuickSlotsPanel" class="quick-slots-panel" style="flex-grow: 0; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;"/>
+                <ui:VisualElement name="EquipmentPanel" class="equipment-panel" style="flex-grow: 0; flex-shrink: 0; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;"/>
+                <ui:VisualElement name="InventoryGridPanel" class="inventory-grid-panel" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70);">
+                    <ui:ScrollView name="InventoryScrollView" horizontal-scroller-visibility="Hidden" class="inventory-scroll-view" style="flex-grow: 1;">
+                        <ui:VisualElement name="ItemGrid" class="item-grid" style="flex-grow: 0; flex-shrink: 0; flex-wrap: wrap; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;"/>
+                    </ui:ScrollView>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="BottomInfo" class="bottom-info" style="flex-grow: 0;">
+                <ui:Label text="Gold: 0" name="Gold" class="gold-label"/>
+                <ui:Label text="Weight: 0 / 100" name="Weight" class="weight-label"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

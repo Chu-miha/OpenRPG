@@ -7,4 +7,5 @@ public interface IActionInput
     bool InteractPressed { get; }
     bool UseFirstQuickSlot { get; }
     bool UseSecondQuickSlot { get; }
+    bool InventoryPressed { get; }
 }

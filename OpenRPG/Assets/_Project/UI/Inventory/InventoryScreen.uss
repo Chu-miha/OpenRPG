@@ -1,0 +1,116 @@
+VisualElement {
+}
+
+.dim-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.inventory-panel {
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    background-color: rgba(20, 20, 22, 0.89);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(90, 90, 90);
+    border-right-color: rgb(90, 90, 90);
+    border-top-color: rgb(90, 90, 90);
+    border-bottom-color: rgb(90, 90, 90);
+    padding-top: 20px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+}
+
+.inventory-header {
+    height: 60px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(70, 70, 70);
+    border-right-color: rgb(70, 70, 70);
+    border-top-color: rgb(70, 70, 70);
+    border-bottom-color: rgb(70, 70, 70);
+}
+
+.inventory-title {
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: rgb(230, 230, 230);
+    -unity-text-align: middle-center;
+}
+
+.main-content {
+    flex-direction: row;
+    flex-grow: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-shrink: 1;
+    height: 50px;
+}
+
+.quick-slots-panel {
+    width: 160px;
+    flex-shrink: 0;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(70, 70, 70);
+    border-right-color: rgb(70, 70, 70);
+    border-top-color: rgb(70, 70, 70);
+    border-bottom-color: rgb(70, 70, 70);
+    padding-right: 16px;
+}
+
+.equipment-panel {
+    width: 480px;
+    padding-left: 16px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.inventory-grid-panel {
+    flex-grow: 1;
+}
+
+.item-grid {
+    flex-direction: row;
+    
+}
+
+.bottom-info {
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    border-top-width: 1px;
+    border-left-color: rgb(70, 70, 70);
+    border-right-color: rgb(70, 70, 70);
+    border-top-color: rgb(70, 70, 70);
+    border-bottom-color: rgb(70, 70, 70);
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-direction: row;
+}
+
+.gold-label {
+    font-size: 16px;
+    color: rgb(210, 210, 210);
+}
+
+.weight-label {
+    color: rgb(210, 210, 210);
+}
+
+.inventory-scroll-view {
+}

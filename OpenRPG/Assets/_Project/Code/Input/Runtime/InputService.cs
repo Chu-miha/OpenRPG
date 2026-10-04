@@ -15,6 +15,7 @@ public class InputService : IMovementInput, ICameraInput, IActionInput, ICameraM
     public bool UseFirstQuickSlot => _inputActions.Player.FirstQuickSlot.WasPerformedThisFrame();
     public bool UseSecondQuickSlot => _inputActions.Player.SecondQuickSlot.WasPerformedThisFrame();
     public bool SwitchCameraPressed =>  _inputActions.Camera.SwitchCamera.WasPerformedThisFrame();
+    public bool InventoryPressed =>  _inputActions.Player.Inventory.WasPerformedThisFrame();
 
 
     public InputService()
