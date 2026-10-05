@@ -8,16 +8,17 @@ public class InventoryUI : MonoBehaviour
     private UIDocument uiDocument;
     [SerializeField]
     private VisualTreeAsset itemSlotTemplate;
-
+    
     private IActionInput _actionInput;
-
+    private PlayerInventory _playerInventory;
     private VisualElement _inventoryRoot;
-    private VisualElement _itemGrid;
+    private InventoryView _inventoryView;
 
     [Inject]
-    private void Construct(IActionInput actionInput)
+    private void Construct(IActionInput actionInput, PlayerInventory playerInventory)
     {
         _actionInput = actionInput;
+        _playerInventory = playerInventory;
     }
 
     private void Awake()
@@ -25,9 +26,9 @@ public class InventoryUI : MonoBehaviour
         VisualElement root = uiDocument.rootVisualElement;
 
         _inventoryRoot = root.Q<VisualElement>("InventoryRoot");
-        _itemGrid = root.Q<VisualElement>("ItemGrid");
-        
-        CreateTestSlots();
+
+        _inventoryView = new InventoryView(root, itemSlotTemplate);
+        _inventoryView.SetInventory(_playerInventory);
     }
 
     private void Update()
@@ -42,17 +43,31 @@ public class InventoryUI : MonoBehaviour
     {
         bool isOpen = _inventoryRoot.style.display == DisplayStyle.Flex;
 
-        _inventoryRoot.style.display =
-            isOpen ? DisplayStyle.None : DisplayStyle.Flex;
+        if (isOpen)
+        {
+            Close();
+            return;
+        }
+
+        Open();
+    }
+
+    private void Open()
+    {
+        _inventoryView.Build(_playerInventory.SlotCount);
+
+        _inventoryView.UpdateAll(_playerInventory);
+
+        _inventoryRoot.style.display = DisplayStyle.Flex;
+    }
+
+    private void Close()
+    {
+        _inventoryRoot.style.display = DisplayStyle.None;
     }
     
-    private void CreateTestSlots()
+    private void OnDestroy()
     {
-        for (int i = 0; i < 120; i++)
-        {
-            VisualElement slot = itemSlotTemplate.Instantiate();
-
-            _itemGrid.Add(slot);
-        }
+        _inventoryView?.Dispose();
     }
 }

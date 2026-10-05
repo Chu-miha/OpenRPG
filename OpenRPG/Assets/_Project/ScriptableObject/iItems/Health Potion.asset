@@ -15,7 +15,7 @@ MonoBehaviour:
   <Id>k__BackingField: health_potion
   <Name>k__BackingField: Health Potion
   <Description>k__BackingField: Restores health
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: b525ed24b58b14640ac1dc4f5100f64e, type: 3}
   <Weight>k__BackingField: 0.5
   <Price>k__BackingField: 25
   _effects:

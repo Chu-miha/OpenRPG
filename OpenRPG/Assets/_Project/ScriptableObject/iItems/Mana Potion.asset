@@ -28,7 +28,7 @@ MonoBehaviour:
   <Id>k__BackingField: mana_potion
   <Name>k__BackingField: Mana Potion
   <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: cd1aaaab40189ac49a84878e9989924f, type: 3}
   <Weight>k__BackingField: 0
   <Price>k__BackingField: 0
   _effects:

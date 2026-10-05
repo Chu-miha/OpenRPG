@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface  IInventoryFactory
 {
-    IInventory Create();
+    IInventory Create(int  slotCount);
 }

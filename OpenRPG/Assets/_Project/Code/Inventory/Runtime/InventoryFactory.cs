@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class InventoryFactory : IInventoryFactory
 {
-    public IInventory Create()
+    public IInventory Create(int  slotCount)
     {
-        return new Inventory();
+        return new Inventory(slotCount);
     }
 }

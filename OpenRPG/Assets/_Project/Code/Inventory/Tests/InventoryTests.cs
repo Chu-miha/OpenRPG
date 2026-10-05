@@ -11,7 +11,7 @@ public class InventoryTests
     [SetUp]
     public void SetUp()
     {
-        _inventory = new Inventory();
+        _inventory = new Inventory(2);
 
         _itemA = CreateItem("item_a", "Item A");
         _itemB = CreateItem("item_b", "Item B");
