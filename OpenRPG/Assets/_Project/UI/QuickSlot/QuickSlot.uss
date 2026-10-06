@@ -1,0 +1,56 @@
+VisualElement {}
+
+.quick-slot {
+    width: 64px;
+    height: 64px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    margin-bottom: 20px;
+
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+
+    border-top-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-color: rgb(255, 255, 255);
+}
+
+.quick-slot-icon {
+    width: 64px;
+    height: 64px;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.quick-slot-count {
+    position: absolute;
+
+    right: 4px;
+    bottom: 2px;
+
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+}
+
+.quick-slot-key {
+    position: absolute;
+
+    left: 50%;
+    bottom: -22px;
+
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+}
+
+.quick-slot--target {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}

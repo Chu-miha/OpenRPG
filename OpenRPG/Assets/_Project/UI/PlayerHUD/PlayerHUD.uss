@@ -69,3 +69,16 @@ VisualElement {
     -unity-font-style: bold;
     color: rgb(176, 176, 176);
 }
+
+.quick-slots-hud {
+    position: absolute;
+
+    right: 5%;
+    bottom: 14%;
+
+    width: 80px;
+
+    flex-direction: column;
+
+    align-items: center;
+}

@@ -1,0 +1,29 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+
+    <Style src="project://database/Assets/_Project/UI/QuickSlot/QuickSlot.uss?fileID=7433441132597879392&amp;guid=995757bb75a8b084b91851edd73e16b2&amp;type=3#QuickSlot"/>
+
+    <ui:VisualElement
+        name="QuickSlot"
+        class="quick-slot">
+
+        <ui:VisualElement
+            name="QuickSlotIcon"
+            class="quick-slot-icon" />
+
+        <ui:Label
+            name="QuickSlotCount"
+            class="quick-slot-count"
+            text="" />
+
+        <ui:Label
+            name="QuickSlotKey"
+            class="quick-slot-key"
+            text="R" />
+
+    </ui:VisualElement>
+
+</ui:UXML>

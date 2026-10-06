@@ -7,7 +7,7 @@
                 <ui:Label text="INVENTORY" name="Title" class="inventory-title"/>
             </ui:VisualElement>
             <ui:VisualElement name="MainContent" class="main-content" style="flex-grow: 1; height: auto;">
-                <ui:VisualElement name="QuickSlotsPanel" class="quick-slots-panel" style="flex-grow: 0; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;"/>
+                <ui:VisualElement name="QuickSlotsPanel" class="quick-slots-panel"/>
                 <ui:VisualElement name="EquipmentPanel" class="equipment-panel" style="flex-grow: 0; flex-shrink: 0; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;"/>
                 <ui:VisualElement name="InventoryGridPanel" class="inventory-grid-panel" style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(70, 70, 70); border-right-color: rgb(70, 70, 70); border-top-color: rgb(70, 70, 70); border-bottom-color: rgb(70, 70, 70);">
                     <ui:ScrollView name="InventoryScrollView" horizontal-scroller-visibility="Hidden" class="inventory-scroll-view" style="flex-grow: 1;">

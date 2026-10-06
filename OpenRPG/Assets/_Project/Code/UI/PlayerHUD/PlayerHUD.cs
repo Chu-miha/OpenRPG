@@ -7,19 +7,24 @@ public class PlayerHUD : MonoBehaviour
 {
     [SerializeField]
     private UIDocument uiDocument;
+    [SerializeField]
+    private VisualTreeAsset quickSlotTemplate;
 
     private PlayerStats _playerStats;
     private PlayerInteraction _playerInteraction;
+    private PlayerInventory _playerInventory;
 
     private PlayerHUDBarView _barView;
     private InteractionPromptView _promptView;
+    private QuickSlotsView _quickSlotsView;
     
     
     [Inject]
-    private void Construct(PlayerStats playerStats, PlayerInteraction playerInteraction)
+    private void Construct(PlayerStats playerStats, PlayerInteraction playerInteraction,  PlayerInventory playerInventory)
     {
         _playerStats = playerStats;
         _playerInteraction = playerInteraction;
+        _playerInventory = playerInventory;
     }
 
     private void Awake()
@@ -28,10 +33,15 @@ public class PlayerHUD : MonoBehaviour
 
         _barView = new PlayerHUDBarView(root);
         
-        VisualElement promptElement = 
-            root.Q<VisualElement>("InteractionPrompt");
+        VisualElement promptElement = root.Q<VisualElement>("InteractionPrompt");
 
         _promptView = new InteractionPromptView(promptElement);
+        
+        VisualElement quickSlotsElement = root.Q<VisualElement>("QuickSlotsHUD");
+
+        _quickSlotsView = new QuickSlotsView(quickSlotsElement, quickSlotTemplate, _playerInventory);
+
+        _quickSlotsView.Build();
     }
     
     private void Start()
@@ -74,6 +84,11 @@ public class PlayerHUD : MonoBehaviour
                     value,
                     _playerStats.Stamina.MaxValue);
             });
+    }
+    
+    private void OnDestroy()
+    {
+        _quickSlotsView?.Dispose();
     }
 
 }

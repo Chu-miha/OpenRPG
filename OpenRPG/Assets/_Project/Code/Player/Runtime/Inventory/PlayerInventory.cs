@@ -1,10 +1,17 @@
+using System;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class PlayerInventory
 {
     private readonly IInventory _inventory;
+    private readonly Subject<Unit> _inventoryChanged = new();
+    private readonly Subject<int> _quickSlotChanged = new();
+
     public int SlotCount => _inventory.SlotCount;
+    public IObservable<Unit> InventoryChanged => _inventoryChanged;
+    public IObservable<int> QuickSlotChanged => _quickSlotChanged;
 
     private readonly QuickItemSlot[] _quickSlots =
     {
@@ -19,12 +26,21 @@ public class PlayerInventory
 
     public bool AddItemToInventory(Item item)
     {
-        return _inventory.Add(item);
+        bool added = _inventory.Add(item);
+        if (!added) return false;
+        
+        _inventoryChanged.OnNext(Unit.Default);
+        return true;
     }
 
     public bool RemoveItemFromInventory(Item item)
     {
-        return _inventory.Remove(item);
+        bool removed = _inventory.Remove(item);
+        if (!removed) return false;
+        
+        _inventoryChanged.OnNext(Unit.Default);
+        return true;
+
     }
 
     public int GetItemQuantity(Item item)
@@ -39,7 +55,11 @@ public class PlayerInventory
 
     public bool MoveItem(int fromIndex, int toIndex)
     {
-        return _inventory.Move(fromIndex, toIndex);
+        bool moved = _inventory.Move(fromIndex, toIndex);
+        if (!moved) return false;
+
+        _inventoryChanged.OnNext(Unit.Default);
+        return true;
     }
 
     public void ExpandInventory(int amount)
@@ -55,12 +75,39 @@ public class PlayerInventory
         return _quickSlots[slotIndex].Item;
     }
 
-    public void AssignQuickItem(int slotIndex, Item item)
+    public bool AssignQuickItem(int slotIndex, Item item)
     {
         if (slotIndex < 0 || slotIndex >= _quickSlots.Length)
-            return;
+        {
+            return false;
+        }
 
-        _quickSlots[slotIndex].SetItem(item);
+        if (item == null)
+            return false;
+
+        QuickItemSlot targetSlot = _quickSlots[slotIndex];
+
+        if (targetSlot.Item == item)
+            return true;
+
+        for (int i = 0; i < _quickSlots.Length; i++)
+        {
+            if (i == slotIndex)
+                continue;
+
+            if (_quickSlots[i].Item != item)
+                continue;
+
+            _quickSlots[i].Clear();
+
+            _quickSlotChanged.OnNext(i);
+        }
+
+        targetSlot.SetItem(item);
+
+        _quickSlotChanged.OnNext(slotIndex);
+
+        return true;
     }
 
     public void ClearQuickSlot(int slotIndex)
@@ -69,6 +116,8 @@ public class PlayerInventory
             return;
 
         _quickSlots[slotIndex].Clear();
+        
+        _quickSlotChanged.OnNext(slotIndex);
     }
     
 }

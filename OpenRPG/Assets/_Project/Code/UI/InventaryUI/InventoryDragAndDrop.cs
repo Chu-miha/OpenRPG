@@ -5,21 +5,24 @@ using UnityEngine.UIElements;
 
 public class InventoryDragAndDrop : IDisposable
 {
-     private readonly VisualElement _dragLayer;
+    private readonly VisualElement _dragLayer;
     private readonly PlayerInventory _playerInventory;
     private readonly List<InventorySlotView> _slotViews;
+    private readonly IReadOnlyList<QuickSlotView> _quickSlotViews;
 
     private VisualElement _ghost;
     private InventorySlotView _sourceSlot;
     private InventorySlotView _targetSlot;
+    private QuickSlotView _targetQuickSlot;
 
     private bool _isDragging;
 
-    public InventoryDragAndDrop(VisualElement dragLayer, PlayerInventory playerInventory, List<InventorySlotView> slotViews)
+    public InventoryDragAndDrop(VisualElement dragLayer, PlayerInventory playerInventory, List<InventorySlotView> slotViews, IReadOnlyList<QuickSlotView> quickSlotViews)
     {
         _dragLayer = dragLayer;
         _playerInventory = playerInventory;
         _slotViews = slotViews;
+        _quickSlotViews = quickSlotViews;
 
         RegisterEvents();
     }
@@ -65,6 +68,8 @@ public class InventoryDragAndDrop : IDisposable
         MoveGhost(evt.position);
 
         UpdateTarget(evt.position);
+        
+        UpdateQuickSlotTarget(evt.position);
 
         evt.StopPropagation();
     }
@@ -100,12 +105,20 @@ public class InventoryDragAndDrop : IDisposable
     {
         InventorySlotView targetSlot = GetSlotAt(pointerPosition);
 
-        if (targetSlot != null && targetSlot != _sourceSlot)
+        QuickSlotView targetQuickSlot = GetQuickSlotAt(pointerPosition);
+
+        if (targetSlot != null &&
+            targetSlot != _sourceSlot)
         {
             TryMove(_sourceSlot.Index, targetSlot.Index);
         }
+        else if (targetQuickSlot != null)
+        {
+            TryAssignQuickSlot(_sourceSlot.Index, targetQuickSlot.Index);
+        }
 
         ClearTarget();
+        ClearQuickSlotTarget();
 
         DestroyGhost();
 
@@ -113,6 +126,7 @@ public class InventoryDragAndDrop : IDisposable
 
         _sourceSlot = null;
         _targetSlot = null;
+        _targetQuickSlot = null;
 
         _isDragging = false;
     }
@@ -276,6 +290,62 @@ public class InventoryDragAndDrop : IDisposable
             slotView.Root.RemoveFromClassList(
                 "inventory-slot--target");
         }
+    }
+    
+    private QuickSlotView GetQuickSlotAt(Vector2 pointerPosition)
+    {
+        foreach (QuickSlotView slotView in _quickSlotViews)
+        {
+            if (slotView.Root.worldBound.Contains(pointerPosition))
+            {
+                return slotView;
+            }
+        }
+        return null;
+    }
+    
+    private void UpdateQuickSlotTarget(Vector2 pointerPosition)
+    {
+        QuickSlotView target = GetQuickSlotAt(pointerPosition);
+
+        if (target == _targetQuickSlot) return;
+
+        ClearQuickSlotTarget();
+
+        if (target == null) return;
+
+        _targetQuickSlot = target;
+
+        _targetQuickSlot.SetTarget(true);
+    }
+    
+    private void ClearQuickSlotTarget()
+    {
+        if (_targetQuickSlot == null)
+            return;
+
+        _targetQuickSlot.SetTarget(false);
+
+        _targetQuickSlot = null;
+    }
+    
+    private void TryAssignQuickSlot( int inventoryIndex, int quickSlotIndex)
+    {
+        InventorySlot inventorySlot = _playerInventory.GetSlot(inventoryIndex);
+
+        if (inventorySlot == null || inventorySlot.IsEmpty)
+        {
+            return;
+        }
+
+        Item item = inventorySlot.Stack.Item;
+
+        if (item.Effects == null || item.Effects.Length == 0)
+        {
+            return;
+        }
+
+        _playerInventory.AssignQuickItem(quickSlotIndex, item);
     }
     
     public void Dispose()

@@ -8,10 +8,14 @@ public class InventoryUI : MonoBehaviour
     private UIDocument uiDocument;
     [SerializeField]
     private VisualTreeAsset itemSlotTemplate;
+    [SerializeField]
+    private VisualTreeAsset quickSlotTemplate;
     
     private IActionInput _actionInput;
     private PlayerInventory _playerInventory;
     private VisualElement _inventoryRoot;
+    private VisualElement _quickSlotsPanel;
+    private QuickSlotsView _quickSlotsView;
     private InventoryView _inventoryView;
 
     [Inject]
@@ -26,9 +30,13 @@ public class InventoryUI : MonoBehaviour
         VisualElement root = uiDocument.rootVisualElement;
 
         _inventoryRoot = root.Q<VisualElement>("InventoryRoot");
+        _quickSlotsPanel = root.Q<VisualElement>("QuickSlotsPanel");
 
         _inventoryView = new InventoryView(root, itemSlotTemplate);
-        _inventoryView.SetInventory(_playerInventory);
+        _quickSlotsView = new QuickSlotsView(_quickSlotsPanel, quickSlotTemplate, _playerInventory);
+        _inventoryView.SetInventory(_playerInventory, _quickSlotsView);
+        
+        _quickSlotsView.Build();
     }
 
     private void Update()
@@ -69,5 +77,6 @@ public class InventoryUI : MonoBehaviour
     private void OnDestroy()
     {
         _inventoryView?.Dispose();
+        _quickSlotsView?.Dispose();
     }
 }

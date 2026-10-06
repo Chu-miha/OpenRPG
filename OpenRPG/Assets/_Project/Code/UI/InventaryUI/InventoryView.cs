@@ -22,10 +22,10 @@ public class InventoryView
         _itemGrid = root.Q<VisualElement>("ItemGrid");
     }
 
-    public void SetInventory(PlayerInventory playerInventory)
+    public void SetInventory(PlayerInventory playerInventory, QuickSlotsView quickSlotsView)
     {
         _playerInventory = playerInventory;
-        _dragAndDrop = new InventoryDragAndDrop(_root, _playerInventory, _slotViews);
+        _dragAndDrop = new InventoryDragAndDrop(_root, _playerInventory, _slotViews, quickSlotsView.SlotViews);
     }
 
     public void Build(int slotCount)
