@@ -4,6 +4,8 @@ using Zenject;
 
 public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteractor
 {
+    [Header("Combat - TEMP")]
+    [SerializeField] private AttackDefinition _defaultAttack;
     public IMovement Movement { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
     
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private PlayerInteraction _playerInteraction;
     private PlayerInventory _playerInventory;
     private PlayerItemUsage _playerItemUsage;
+    private PlayerCombat _playerCombat;
 
     [Inject]
     private void Construct(IMovement movement,
@@ -22,7 +25,8 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         IActionInput actionInput,
         PlayerInteraction playerInteraction,
         PlayerInventory playerInventory,
-        PlayerItemUsage playerItemUsage)
+        PlayerItemUsage playerItemUsage,
+        ICombatControllerFactory combatControllerFactory)
     {
         Movement = movement;
         PlayerStats = playerStats;
@@ -30,6 +34,8 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         _playerInteraction = playerInteraction;
         _playerInventory = playerInventory;
         _playerItemUsage = playerItemUsage;
+        
+        _playerCombat = new PlayerCombat(combatControllerFactory, transform, _defaultAttack);
         
     }
     
@@ -41,6 +47,11 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     
     private void Update()
     {
+        if (_actionInput.AttackPressed)
+        {
+            bool started = _playerCombat.TryAttack();
+        }
+        
         _playerInteraction.UpdateTarget(this);
 
         HandleItemUsage();
