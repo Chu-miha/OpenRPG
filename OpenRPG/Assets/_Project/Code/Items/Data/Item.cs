@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item", menuName = "Scriptable Objects/Item")]
+[CreateAssetMenu(fileName = "Item", menuName = "RPG/Items/Item")]
 public class Item : ScriptableObject
 {
     [field: SerializeField]
@@ -18,6 +18,9 @@ public class Item : ScriptableObject
 
     [field: SerializeField]
     public float Weight { get; private set; }
+
+    [field: SerializeField, Min(1)] 
+    public int MaxStackSize { get; private set; } = 1;
 
     [field: SerializeField]
     public int Price { get; private set; }

@@ -9,6 +9,7 @@ public sealed class AttackDefinition : ScriptableObject
     [field: SerializeField, Min(0f)] 
     public float Cooldown { get; private set; } = 0.5f;
     
-    [field: SerializeField] 
-    public AttackBehavior Behavior { get; private set; }
+    [SerializeField]
+    private AttackBehavior _behavior;
+    public AttackBehavior Behavior => _behavior;
 }

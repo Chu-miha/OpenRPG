@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Equipment/CombatSlot.uss?fileID=7433441132597879392&amp;guid=3a38bad0bd42f5440a3d0ddc3c03b6ac&amp;type=3#CombatSlot"/>
+    <ui:VisualElement name="CombatSlot" class="combat-slot">
+
+        <ui:Label
+            name="SlotNumber"
+            class="combat-slot__active"
+            text="1" />
+
+        <ui:VisualElement
+            name="ItemIcon"
+            class="combat-slot__icon" />
+
+    </ui:VisualElement>
+</ui:UXML>

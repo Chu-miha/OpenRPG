@@ -4,8 +4,8 @@ using Zenject;
 
 public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteractor
 {
-    [Header("Combat - TEMP")]
-    [SerializeField] private AttackDefinition _defaultAttack;
+    [SerializeField]
+    private AttackDefinition defaultAttack;
     public IMovement Movement { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
     
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private PlayerInventory _playerInventory;
     private PlayerItemUsage _playerItemUsage;
     private PlayerCombat _playerCombat;
+    private PlayerEquipment _playerEquipment;
 
     [Inject]
     private void Construct(IMovement movement,
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         PlayerInteraction playerInteraction,
         PlayerInventory playerInventory,
         PlayerItemUsage playerItemUsage,
+        PlayerEquipment playerEquipment,
         ICombatControllerFactory combatControllerFactory)
     {
         Movement = movement;
@@ -34,8 +36,9 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         _playerInteraction = playerInteraction;
         _playerInventory = playerInventory;
         _playerItemUsage = playerItemUsage;
+        _playerEquipment = playerEquipment;
         
-        _playerCombat = new PlayerCombat(combatControllerFactory, transform, _defaultAttack);
+        _playerCombat = new PlayerCombat(combatControllerFactory, _playerEquipment, transform, defaultAttack);
         
     }
     

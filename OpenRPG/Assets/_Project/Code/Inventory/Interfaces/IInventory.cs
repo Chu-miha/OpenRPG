@@ -10,4 +10,6 @@ public interface IInventory
     InventorySlot GetSlot(int index);
     bool Move(int fromIndex, int toIndex);
     void Expand(int amount);
+    float TotalWeight { get; }
+    bool RemoveFromSlot(int index, int amount = 1);
 }

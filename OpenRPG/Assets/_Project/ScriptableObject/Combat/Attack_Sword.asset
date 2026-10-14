@@ -9,8 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f114692c1763764b84e1a1f4fd883df, type: 3}
+  m_Name: Attack_Sword
+  m_EditorClassIdentifier: RPG.Combat::AttackDefinition
+  <Damage>k__BackingField: 20
+  <Cooldown>k__BackingField: 0.5
+  _behavior: {fileID: 7262067159696466199}
+--- !u!114 &7262067159696466199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b488ef430ddddcf4fbe89697a14733b5, type: 3}
-  m_Name: MeleeAttack_Default
+  m_Name: MeleeAttackBehavior
   m_EditorClassIdentifier: RPG.Combat::MeleeAttackBehavior
   _forwardDistance: 1.2
   _verticalOffset: 1

@@ -84,8 +84,130 @@ VisualElement {
 .equipment-panel {
     width: 480px;
     padding-left: 16px;
+    padding-right: 16px;
     flex-shrink: 0;
     flex-grow: 0;
+}
+
+.equipment-layout {
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    padding-bottom: 20px;
+}
+
+.equipment-title {
+    height: 32px;
+    color: rgb(230, 230, 230);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 12px;
+}
+
+.armor-area {
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.armor-column {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.armor-slot {
+    width: 72px;
+    height: 72px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-width: 1px;
+    border-color: rgb(110, 110, 110);
+    background-color: rgba(15, 15, 15, 0.35);
+    align-items: center;
+    justify-content: center;
+}
+
+.armor-slot__label {
+    color: rgb(175, 175, 175);
+    font-size: 11px;
+    -unity-text-align: middle-center;
+}
+
+.combat-area {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-top: 12px;
+    padding-bottom: 18px;
+    border-top-width: 1px;
+    border-top-color: rgb(70, 70, 70);
+}
+
+.combat-title {
+    height: 26px;
+    color: rgb(220, 220, 220);
+    font-size: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 10px;
+}
+
+.combat-slots {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.combat-slot {
+    width: 100px;
+    height: 112px;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding: 5px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-color: rgb(145, 145, 145);
+    background-color: rgba(15, 15, 15, 0.55);
+}
+
+.combat-slot__icon {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.combat-slot__title {
+    color: rgb(220, 220, 220);
+    font-size: 11px;
+    -unity-text-align: middle-center;
+    margin-top: 5px;
+}
+
+.combat-slot__active {
+    position: absolute;
+    top: 3px;
+    color: rgb(255, 205, 90);
+    font-size: 9px;
+    -unity-font-style: bold;
+}
+
+.combat-slot--active {
+    border-width: 3px;
+    border-color: rgb(220, 170, 65);
+    background-color: rgba(220, 170, 65, 0.08);
+}
+
+.combat-slot--target {
+    border-width: 2px;
+    border-color: rgb(100, 210, 130);
 }
 
 .inventory-grid-panel {

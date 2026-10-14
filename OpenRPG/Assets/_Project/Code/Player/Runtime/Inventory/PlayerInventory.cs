@@ -8,6 +8,7 @@ public class PlayerInventory
     private readonly IInventory _inventory;
     private readonly Subject<Unit> _inventoryChanged = new();
     private readonly Subject<int> _quickSlotChanged = new();
+    public float TotalWeight => _inventory.TotalWeight;
 
     public int SlotCount => _inventory.SlotCount;
     public IObservable<Unit> InventoryChanged => _inventoryChanged;
@@ -24,23 +25,51 @@ public class PlayerInventory
         _inventory = inventoryFactory.Create(30);
     }
 
-    public bool AddItemToInventory(Item item)
+    public bool AddItemToInventory(Item item, int amount = 1)
     {
-        bool added = _inventory.Add(item);
-        if (!added) return false;
-        
+        bool added = _inventory.Add(item, amount);
+
+        if (!added)
+            return false;
+
         _inventoryChanged.OnNext(Unit.Default);
         return true;
     }
 
-    public bool RemoveItemFromInventory(Item item)
+    public bool RemoveItemFromInventory(Item item, int amount = 1)
     {
-        bool removed = _inventory.Remove(item);
-        if (!removed) return false;
-        
+        bool removed = _inventory.Remove(item, amount);
+
+        if (!removed) 
+            return false;
+
+        // Если предметов больше нет, убираем его из Quick Slots.
+        if (_inventory.GetQuantity(item) == 0)
+        {
+            for (int i = 0; i < _quickSlots.Length; i++)
+            {
+                if (_quickSlots[i].Item != item)
+                    continue;
+
+                _quickSlots[i].Clear();
+                _quickSlotChanged.OnNext(i);
+            }
+        }
+
         _inventoryChanged.OnNext(Unit.Default);
         return true;
 
+    }
+    
+    public bool RemoveItemFromSlot(int slotIndex, int amount = 1)
+    {
+        bool removed = _inventory.RemoveFromSlot(slotIndex, amount);
+
+        if (!removed)
+            return false;
+
+        _inventoryChanged.OnNext(Unit.Default);
+        return true;
     }
 
     public int GetItemQuantity(Item item)
@@ -65,6 +94,7 @@ public class PlayerInventory
     public void ExpandInventory(int amount)
     {
         _inventory.Expand(amount);
+        _inventoryChanged.OnNext(Unit.Default);
     }
 
     public Item GetQuickItem(int slotIndex)

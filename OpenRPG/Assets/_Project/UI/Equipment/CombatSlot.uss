@@ -1,0 +1,47 @@
+.combat-slot {
+    width: 76px;
+    height: 76px;
+
+    flex-shrink: 0;
+    position: relative;
+
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.combat-slot-icon {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.combat-slot-number {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+
+    color: rgb(210, 210, 210);
+    font-size: 13px;
+}
+
+.combat-slot--target {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+
+    border-left-color: rgb(80, 200, 120);
+    border-right-color: rgb(80, 200, 120);
+    border-top-color: rgb(80, 200, 120);
+    border-bottom-color: rgb(80, 200, 120);
+}
+
+.combat-slot--dragging {
+    opacity: 0.35;
+}

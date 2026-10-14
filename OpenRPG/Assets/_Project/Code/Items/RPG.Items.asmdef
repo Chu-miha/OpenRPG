@@ -2,7 +2,8 @@
     "name": "RPG.Items",
     "rootNamespace": "",
     "references": [
-        "GUID:43394b9b256a0914b86dd5230a90c5f1"
+        "GUID:43394b9b256a0914b86dd5230a90c5f1",
+        "GUID:afa0fc7e74aeac943afb3ecbcc994090"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

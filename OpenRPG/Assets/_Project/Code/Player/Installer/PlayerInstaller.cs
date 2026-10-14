@@ -51,5 +51,14 @@ public class PlayerInstaller : MonoInstaller
         Container.Bind<PlayerItemUsage>()
             .AsSingle();
         
+        Container.Bind<PlayerEquipment>()
+            .AsSingle();
+        
+        Container.Bind<PlayerEquipmentService>()
+            .AsSingle();
+
+        Container.Bind<PlayerCarryWeight>()
+            .AsSingle();
+        
     }
 }

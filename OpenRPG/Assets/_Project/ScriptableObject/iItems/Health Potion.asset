@@ -17,6 +17,7 @@ MonoBehaviour:
   <Description>k__BackingField: Restores health
   <Icon>k__BackingField: {fileID: 21300000, guid: b525ed24b58b14640ac1dc4f5100f64e, type: 3}
   <Weight>k__BackingField: 0.5
+  <MaxStackSize>k__BackingField: 20
   <Price>k__BackingField: 25
   _effects:
   - {fileID: 7211563793994625502}

@@ -3,19 +3,16 @@ using UnityEngine;
 public class CombatController
 {
     private readonly Transform _attacker;
-    private readonly AttackDefinition _defaultAttack;
 
     private float _nextAttackTime;
 
-    public CombatController(Transform attacker, AttackDefinition defaultAttack)
+    public CombatController(Transform attacker)
     {
         _attacker = attacker;
-        _defaultAttack = defaultAttack;
     }
     
-    public bool TryAttack(AttackDefinition definition = null)
+    public bool TryAttack(AttackDefinition attack)
     {
-        AttackDefinition attack = definition != null ? definition : _defaultAttack;
 
         if (_attacker == null || attack == null || attack.Behavior == null)
         {

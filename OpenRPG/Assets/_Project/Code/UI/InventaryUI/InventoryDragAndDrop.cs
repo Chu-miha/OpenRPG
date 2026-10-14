@@ -9,7 +9,11 @@ public class InventoryDragAndDrop : IDisposable
     private readonly PlayerInventory _playerInventory;
     private readonly List<InventorySlotView> _slotViews;
     private readonly IReadOnlyList<QuickSlotView> _quickSlotViews;
+    private readonly PlayerEquipmentService _equipmentService;
+    private readonly PlayerEquipment _equipment;
+    private readonly IReadOnlyList<CombatSlotView> _combatSlotViews;
 
+    private CombatSlotView _targetCombatSlot;
     private VisualElement _ghost;
     private InventorySlotView _sourceSlot;
     private InventorySlotView _targetSlot;
@@ -17,12 +21,22 @@ public class InventoryDragAndDrop : IDisposable
 
     private bool _isDragging;
 
-    public InventoryDragAndDrop(VisualElement dragLayer, PlayerInventory playerInventory, List<InventorySlotView> slotViews, IReadOnlyList<QuickSlotView> quickSlotViews)
+    public InventoryDragAndDrop( VisualElement dragLayer,
+        PlayerInventory playerInventory,
+        List<InventorySlotView> slotViews,
+        IReadOnlyList<QuickSlotView> quickSlotViews,
+        PlayerEquipmentService equipmentService,
+        PlayerEquipment equipment,
+        IReadOnlyList<CombatSlotView> combatSlotViews)
     {
         _dragLayer = dragLayer;
         _playerInventory = playerInventory;
         _slotViews = slotViews;
         _quickSlotViews = quickSlotViews;
+        
+        _equipmentService = equipmentService;
+        _equipment = equipment;
+        _combatSlotViews = combatSlotViews;
 
         RegisterEvents();
     }
@@ -70,6 +84,8 @@ public class InventoryDragAndDrop : IDisposable
         UpdateTarget(evt.position);
         
         UpdateQuickSlotTarget(evt.position);
+        
+        UpdateCombatSlotTarget(evt.position);
 
         evt.StopPropagation();
     }
@@ -93,6 +109,8 @@ public class InventoryDragAndDrop : IDisposable
     {
         _sourceSlot = sourceSlot;
         _targetSlot = null;
+        _targetQuickSlot = null;
+        _targetCombatSlot = null;
 
         _isDragging = true;
 
@@ -104,11 +122,10 @@ public class InventoryDragAndDrop : IDisposable
     private void EndDrag(Vector2 pointerPosition)
     {
         InventorySlotView targetSlot = GetSlotAt(pointerPosition);
-
         QuickSlotView targetQuickSlot = GetQuickSlotAt(pointerPosition);
+        CombatSlotView targetCombatSlot = GetCombatSlotAt(pointerPosition);
 
-        if (targetSlot != null &&
-            targetSlot != _sourceSlot)
+        if (targetSlot != null && targetSlot != _sourceSlot)
         {
             TryMove(_sourceSlot.Index, targetSlot.Index);
         }
@@ -116,9 +133,19 @@ public class InventoryDragAndDrop : IDisposable
         {
             TryAssignQuickSlot(_sourceSlot.Index, targetQuickSlot.Index);
         }
+        else if (targetCombatSlot != null)
+        {
+            if (CanEquipToCombatSlot(_sourceSlot, targetCombatSlot))
+            {
+                _equipmentService.EquipFromInventory(
+                    _sourceSlot.Index,
+                    targetCombatSlot.Index);
+            }
+        }
 
         ClearTarget();
         ClearQuickSlotTarget();
+        ClearCombatSlotTarget();
 
         DestroyGhost();
 
@@ -127,6 +154,7 @@ public class InventoryDragAndDrop : IDisposable
         _sourceSlot = null;
         _targetSlot = null;
         _targetQuickSlot = null;
+        _targetCombatSlot = null;
 
         _isDragging = false;
     }
@@ -329,6 +357,16 @@ public class InventoryDragAndDrop : IDisposable
         _targetQuickSlot = null;
     }
     
+    private void ClearCombatSlotTarget()
+    {
+        foreach (CombatSlotView slot in _combatSlotViews)
+        {
+            slot.SetTarget(false);
+        }
+
+        _targetCombatSlot = null;
+    }
+    
     private void TryAssignQuickSlot( int inventoryIndex, int quickSlotIndex)
     {
         InventorySlot inventorySlot = _playerInventory.GetSlot(inventoryIndex);
@@ -346,6 +384,57 @@ public class InventoryDragAndDrop : IDisposable
         }
 
         _playerInventory.AssignQuickItem(quickSlotIndex, item);
+    }
+    
+    private CombatSlotView GetCombatSlotAt(Vector2 position)
+    {
+        foreach (CombatSlotView slot in _combatSlotViews)
+        {
+            if (slot.Root.worldBound.Contains(position))
+                return slot;
+        }
+
+        return null;
+    }
+    
+    private bool CanEquipToCombatSlot(
+        InventorySlotView source,
+        CombatSlotView target)
+    {
+        if (source == null || target == null)
+            return false;
+
+        InventorySlot inventorySlot =
+            _playerInventory.GetSlot(source.Index);
+
+        if (inventorySlot == null || inventorySlot.IsEmpty)
+            return false;
+
+        if (inventorySlot.Stack.Quantity != 1)
+            return false;
+
+        if (inventorySlot.Stack.Item is not AttackableItem)
+            return false;
+
+        if (_equipment.GetCombatSlot(target.Index) != null)
+            return false;
+
+        return true;
+    }
+    
+    private void UpdateCombatSlotTarget(Vector2 position)
+    {
+        _targetCombatSlot = null;
+
+        foreach (CombatSlotView slot in _combatSlotViews)
+        {
+            bool isTarget = slot.Root.worldBound.Contains(position) && CanEquipToCombatSlot(_sourceSlot, slot);
+
+            slot.SetTarget(isTarget);
+
+            if (isTarget)
+                _targetCombatSlot = slot;
+        }
     }
     
     public void Dispose()

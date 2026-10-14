@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 using UnityEngine.UIElements;
 
 public class InventoryView
@@ -13,6 +15,8 @@ public class InventoryView
     private PlayerInventory _playerInventory;
 
     private InventoryDragAndDrop _dragAndDrop;
+    
+    private IDisposable _inventorySubscription;
 
     public InventoryView( VisualElement root, VisualTreeAsset itemSlotTemplate)
     {
@@ -22,10 +26,19 @@ public class InventoryView
         _itemGrid = root.Q<VisualElement>("ItemGrid");
     }
 
-    public void SetInventory(PlayerInventory playerInventory, QuickSlotsView quickSlotsView)
+    public void SetInventory(PlayerInventory playerInventory, 
+        QuickSlotsView quickSlotsView,  
+        PlayerEquipmentService equipmentService, 
+        PlayerEquipment equipment, 
+        IReadOnlyList<CombatSlotView> combatSlotViews)
     {
         _playerInventory = playerInventory;
-        _dragAndDrop = new InventoryDragAndDrop(_root, _playerInventory, _slotViews, quickSlotsView.SlotViews);
+        _inventorySubscription?.Dispose();
+
+        _inventorySubscription = _playerInventory.InventoryChanged
+            .Subscribe(_ => UpdateAll(_playerInventory));
+        
+        _dragAndDrop = new InventoryDragAndDrop(_root, _playerInventory, _slotViews, quickSlotsView.SlotViews, equipmentService, equipment, combatSlotViews);;
     }
 
     public void Build(int slotCount)
@@ -67,6 +80,9 @@ public class InventoryView
     
     public void Dispose()
     {
+        _inventorySubscription?.Dispose();
+        _inventorySubscription = null;
+        
         _dragAndDrop?.Dispose();
         _dragAndDrop = null;
     }

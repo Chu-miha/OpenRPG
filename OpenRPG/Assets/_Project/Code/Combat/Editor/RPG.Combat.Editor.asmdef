@@ -1,0 +1,18 @@
+{
+    "name": "RPG.Combat.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:afa0fc7e74aeac943afb3ecbcc994090"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

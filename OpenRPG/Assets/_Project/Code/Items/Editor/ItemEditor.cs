@@ -3,8 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-
-[CustomEditor(typeof(Item))]
+[CustomEditor(typeof(Item), true)]
 public class ItemEditor : Editor
 {
     private SerializedProperty _effects;

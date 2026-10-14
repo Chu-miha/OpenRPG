@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CombatControllerFactory : ICombatControllerFactory
 {
-    public CombatController Create(Transform attacker, AttackDefinition defaultAttack)
+    public CombatController Create(Transform attacker)
     {
-        return new CombatController(attacker, defaultAttack);
+        return new CombatController(attacker);
     }
 }
