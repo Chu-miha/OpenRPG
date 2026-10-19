@@ -52,6 +52,24 @@ public class Inventory : IInventory
 
         return remaining == 0;
     }
+    
+    public bool AddToSlot(int index, Item item, int amount = 1)
+    {
+        if (!IsValidIndex(index) || item == null || amount <= 0)
+            return false;
+
+        InventorySlot slot = _slots[index];
+
+        if (!slot.IsEmpty)
+            return false;
+
+        if (amount > item.MaxStackSize)
+            return false;
+
+        slot.SetStack(new ItemStack(item, amount));
+
+        return true;
+    }
 
     public bool Remove(Item item, int amount = 1)
     {

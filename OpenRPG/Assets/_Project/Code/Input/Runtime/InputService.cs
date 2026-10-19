@@ -16,6 +16,17 @@ public class InputService : IMovementInput, ICameraInput, IActionInput, ICameraM
     public bool UseSecondQuickSlot => _inputActions.Player.SecondQuickSlot.WasPerformedThisFrame();
     public bool SwitchCameraPressed =>  _inputActions.Camera.SwitchCamera.WasPerformedThisFrame();
     public bool InventoryPressed =>  _inputActions.Player.Inventory.WasPerformedThisFrame();
+    public int SelectedCombatSlot
+    {
+        get
+        {
+            if (_inputActions.Player.FirstCombatSlot.WasPerformedThisFrame()) return 0;
+            if (_inputActions.Player.SecondCombatSlot.WasPerformedThisFrame()) return 1;
+            if (_inputActions.Player.ThirdCombatSlot.WasPerformedThisFrame()) return 2;
+
+            return -1;
+        }
+    }
 
 
     public InputService()

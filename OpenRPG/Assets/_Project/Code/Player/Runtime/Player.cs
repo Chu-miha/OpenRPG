@@ -2,10 +2,13 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteractor
+public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteractor, IDisposable
 {
     [SerializeField]
     private AttackDefinition defaultAttack;
+    // пока костыль
+    [SerializeField] private PlayerVisualReferences _firstPersonVisual;
+    [SerializeField] private PlayerVisualReferences _thirdPersonVisual;
     public IMovement Movement { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
     
@@ -19,6 +22,7 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     private PlayerItemUsage _playerItemUsage;
     private PlayerCombat _playerCombat;
     private PlayerEquipment _playerEquipment;
+    private PlayerVisualController _visualController;
 
     [Inject]
     private void Construct(IMovement movement,
@@ -28,7 +32,8 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         PlayerInventory playerInventory,
         PlayerItemUsage playerItemUsage,
         PlayerEquipment playerEquipment,
-        ICombatControllerFactory combatControllerFactory)
+        ICombatControllerFactory combatControllerFactory,
+        ICameraState cameraState)
     {
         Movement = movement;
         PlayerStats = playerStats;
@@ -39,6 +44,11 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         _playerEquipment = playerEquipment;
         
         _playerCombat = new PlayerCombat(combatControllerFactory, _playerEquipment, transform, defaultAttack);
+        _visualController = new PlayerVisualController(
+            cameraState,
+            _playerEquipment,
+            _firstPersonVisual,
+            _thirdPersonVisual);
         
     }
     
@@ -50,9 +60,11 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
     
     private void Update()
     {
-        if (_actionInput.AttackPressed)
+        HandleCombatSlotInput();
+        
+        if (_actionInput.AttackPressed && _playerCombat.TryAttack())
         {
-            bool started = _playerCombat.TryAttack();
+            _visualController.PlayAttack();
         }
         
         _playerInteraction.UpdateTarget(this);
@@ -84,5 +96,17 @@ public class Player : MonoBehaviour, IItemUser, IHealable, IManaUser, IInteracto
         {
             _playerItemUsage.UseQuickItem(1, this);
         }
+    }
+
+    private void HandleCombatSlotInput()
+    {
+        if(_actionInput.SelectedCombatSlot == -1) return;
+        
+        _playerEquipment.SetActiveCombatSlot(_actionInput.SelectedCombatSlot);
+    }
+    
+    public void Dispose()
+    {
+        _visualController?.Dispose();
     }
 }

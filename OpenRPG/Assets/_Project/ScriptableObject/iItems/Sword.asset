@@ -21,3 +21,5 @@ MonoBehaviour:
   <Price>k__BackingField: 0
   _effects: []
   <AttackDefinition>k__BackingField: {fileID: 11400000, guid: 1075f37f81cdc4641bdd96bcb7129190, type: 2}
+  _visualPrefab: {fileID: 2875133158539066166, guid: 921a9e233954f12419cec6b1fef6f3f8, type: 3}
+  _animationSet: {fileID: 11400000, guid: 195e2edc307399a4ab8413023cd6ee9e, type: 2}

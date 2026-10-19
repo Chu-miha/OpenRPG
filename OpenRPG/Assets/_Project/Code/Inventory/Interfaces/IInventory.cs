@@ -12,4 +12,5 @@ public interface IInventory
     void Expand(int amount);
     float TotalWeight { get; }
     bool RemoveFromSlot(int index, int amount = 1);
+    bool AddToSlot(int index, Item item, int amount = 1);
 }

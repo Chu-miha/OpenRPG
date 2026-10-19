@@ -16,6 +16,7 @@ public class InventoryDragAndDrop : IDisposable
     private CombatSlotView _targetCombatSlot;
     private VisualElement _ghost;
     private InventorySlotView _sourceSlot;
+    private CombatSlotView _sourceCombatSlot;
     private InventorySlotView _targetSlot;
     private QuickSlotView _targetQuickSlot;
 
@@ -55,6 +56,23 @@ public class InventoryDragAndDrop : IDisposable
         if (evt.button != 0)
             return;
 
+        // Сначала проверяем боевой слот
+        CombatSlotView combatSlot = GetCombatSlotAt(evt.position);
+
+        if (combatSlot != null)
+        {
+            AttackableItem item = _equipment.GetCombatSlot(combatSlot.Index);
+
+            if (item == null)
+                return;
+
+            StartCombatDrag(combatSlot, item, evt.position);
+            _dragLayer.CapturePointer(evt.pointerId);
+            evt.StopPropagation();
+            return;
+        }
+
+        // Если боевой слот не найден, проверяем инвентарь
         InventorySlotView slot = GetSlotAt(evt.position);
 
         if (slot == null)
@@ -63,14 +81,11 @@ public class InventoryDragAndDrop : IDisposable
         InventorySlot inventorySlot = _playerInventory.GetSlot(slot.Index);
 
         if (inventorySlot == null || inventorySlot.IsEmpty)
-        {
             return;
-        }
 
         StartDrag(slot, evt.position);
 
         _dragLayer.CapturePointer(evt.pointerId);
-
         evt.StopPropagation();
     }
 
@@ -108,15 +123,35 @@ public class InventoryDragAndDrop : IDisposable
     private void StartDrag(InventorySlotView sourceSlot, Vector2 pointerPosition)
     {
         _sourceSlot = sourceSlot;
+        _sourceCombatSlot = null;
+
         _targetSlot = null;
         _targetQuickSlot = null;
         _targetCombatSlot = null;
 
         _isDragging = true;
 
-        CreateGhost(pointerPosition);
+        Item item = _playerInventory.GetSlot(sourceSlot.Index).Stack.Item;
 
-        SetSlotDragging(_sourceSlot, true);
+        CreateGhost(item, sourceSlot.Root, pointerPosition);
+
+        SetSlotDragging(sourceSlot, true);
+    }
+    
+    private void StartCombatDrag(CombatSlotView sourceSlot, AttackableItem item, Vector2 pointerPosition)
+    {
+        _sourceCombatSlot = sourceSlot;
+        _sourceSlot = null;
+
+        _targetSlot = null;
+        _targetQuickSlot = null;
+        _targetCombatSlot = null;
+
+        _isDragging = true;
+
+        CreateGhost(item, sourceSlot.Root, pointerPosition);
+
+        sourceSlot.SetDragging(true);
     }
 
     private void EndDrag(Vector2 pointerPosition)
@@ -125,21 +160,32 @@ public class InventoryDragAndDrop : IDisposable
         QuickSlotView targetQuickSlot = GetQuickSlotAt(pointerPosition);
         CombatSlotView targetCombatSlot = GetCombatSlotAt(pointerPosition);
 
-        if (targetSlot != null && targetSlot != _sourceSlot)
+        if (_sourceCombatSlot != null)
         {
-            TryMove(_sourceSlot.Index, targetSlot.Index);
-        }
-        else if (targetQuickSlot != null)
-        {
-            TryAssignQuickSlot(_sourceSlot.Index, targetQuickSlot.Index);
-        }
-        else if (targetCombatSlot != null)
-        {
-            if (CanEquipToCombatSlot(_sourceSlot, targetCombatSlot))
+            // Перетаскивание из экипировки в инвентарь
+            if (targetSlot != null)
             {
-                _equipmentService.EquipFromInventory(
-                    _sourceSlot.Index,
-                    targetCombatSlot.Index);
+                _equipmentService.UnequipToInventory(_sourceCombatSlot.Index, targetSlot.Index);
+            }
+        }
+        else if (_sourceSlot != null)
+        {
+            if (targetSlot != null && targetSlot != _sourceSlot)
+            {
+                TryMove(_sourceSlot.Index, targetSlot.Index);
+            }
+            else if (targetQuickSlot != null)
+            {
+                TryAssignQuickSlot(_sourceSlot.Index, targetQuickSlot.Index);
+            }
+            else if (targetCombatSlot != null)
+            {
+                if (CanEquipToCombatSlot(_sourceSlot, targetCombatSlot))
+                {
+                    _equipmentService.EquipFromInventory(
+                        _sourceSlot.Index,
+                        targetCombatSlot.Index);
+                }
             }
         }
 
@@ -150,8 +196,10 @@ public class InventoryDragAndDrop : IDisposable
         DestroyGhost();
 
         SetSlotDragging(_sourceSlot, false);
+        _sourceCombatSlot?.SetDragging(false);
 
         _sourceSlot = null;
+        _sourceCombatSlot = null;
         _targetSlot = null;
         _targetQuickSlot = null;
         _targetCombatSlot = null;
@@ -182,40 +230,38 @@ public class InventoryDragAndDrop : IDisposable
         _slotViews[index].SetSlot(slot);
     }
 
-    private void CreateGhost(Vector2 pointerPosition)
+    private void CreateGhost(
+        Item item,
+        VisualElement source,
+        Vector2 pointerPosition)
     {
-        Item item = _playerInventory.GetSlot(_sourceSlot.Index).Stack.Item;
-
         _ghost = new VisualElement();
 
         _ghost.name = "InventoryDragGhost";
-
         _ghost.style.position = Position.Absolute;
 
-        float width = _sourceSlot.Root.worldBound.width;
-
-        float height = _sourceSlot.Root.worldBound.height;
+        float width = source.worldBound.width;
+        float height = source.worldBound.height;
 
         _ghost.style.width = width;
-
         _ghost.style.height = height;
 
         _ghost.style.backgroundImage = new StyleBackground(item.Icon);
-
         _ghost.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Contain);
 
-        _ghost.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Center);
+        _ghost.style.backgroundPositionX =
+            new BackgroundPosition(BackgroundPositionKeyword.Center);
 
-        _ghost.style.backgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Center);
+        _ghost.style.backgroundPositionY =
+            new BackgroundPosition(BackgroundPositionKeyword.Center);
 
-        _ghost.style.backgroundRepeat = new BackgroundRepeat(Repeat.NoRepeat, Repeat.NoRepeat);
+        _ghost.style.backgroundRepeat =
+            new BackgroundRepeat(Repeat.NoRepeat, Repeat.NoRepeat);
 
         _ghost.style.opacity = 0.75f;
-
         _ghost.pickingMode = PickingMode.Ignore;
 
         _ghost.style.left = pointerPosition.x - width * 0.5f;
-
         _ghost.style.top = pointerPosition.y - height * 0.5f;
 
         _dragLayer.Add(_ghost);

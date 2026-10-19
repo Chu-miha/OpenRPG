@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using UniRx;
 
 public class CameraController : ITickable , ICameraState
 {
@@ -9,8 +10,11 @@ public class CameraController : ITickable , ICameraState
     private ICameraMode _currentMode;
     private readonly ICameraModeInput _cameraModeInput;
     private readonly ICameraTransition _cameraTransition;
+    private readonly Subject<CameraModeType> _cameraModeChanged = new();
+
 
     public ICameraMode CurrentMode => _currentMode;
+    public IObservable<CameraModeType> CameraModeChanged => _cameraModeChanged;
 
     public CameraController(List<ICameraMode> cameraModes, CameraModeType defaultMode, ICameraModeInput cameraModeInput, ICameraTransition cameraTransition)
     {
@@ -60,6 +64,8 @@ public class CameraController : ITickable , ICameraState
         _currentMode = newMode;
 
         _currentMode.Activate();
+        
+        _cameraModeChanged.OnNext(_currentMode.Type);
     }
 
     public void Tick()

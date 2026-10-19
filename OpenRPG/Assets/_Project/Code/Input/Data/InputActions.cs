@@ -163,6 +163,33 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirstCombatSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""28662785-d54e-4165-be91-2b8771d1a463"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondCombatSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""d04eaf82-5de2-4aec-ac7d-8afecf076e4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThirdCombatSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""24fd24f5-7d9c-4675-a339-54fce6165a46"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -352,6 +379,39 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f79c622-5b9d-4b82-a99d-19d094011bb8"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstCombatSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aafb1bf9-f8f2-4ee7-af2c-635de51a4e7c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondCombatSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e321d24-e459-47cb-bdc6-a4cb66ce9525"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThirdCombatSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -407,6 +467,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_FirstQuickSlot = m_Player.FindAction("FirstQuickSlot", throwIfNotFound: true);
         m_Player_SecondQuickSlot = m_Player.FindAction("SecondQuickSlot", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
+        m_Player_FirstCombatSlot = m_Player.FindAction("FirstCombatSlot", throwIfNotFound: true);
+        m_Player_SecondCombatSlot = m_Player.FindAction("SecondCombatSlot", throwIfNotFound: true);
+        m_Player_ThirdCombatSlot = m_Player.FindAction("ThirdCombatSlot", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_SwitchCamera = m_Camera.FindAction("SwitchCamera", throwIfNotFound: true);
@@ -499,6 +562,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_FirstQuickSlot;
     private readonly InputAction m_Player_SecondQuickSlot;
     private readonly InputAction m_Player_Inventory;
+    private readonly InputAction m_Player_FirstCombatSlot;
+    private readonly InputAction m_Player_SecondCombatSlot;
+    private readonly InputAction m_Player_ThirdCombatSlot;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -542,6 +608,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Inventory".
         /// </summary>
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/FirstCombatSlot".
+        /// </summary>
+        public InputAction @FirstCombatSlot => m_Wrapper.m_Player_FirstCombatSlot;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SecondCombatSlot".
+        /// </summary>
+        public InputAction @SecondCombatSlot => m_Wrapper.m_Player_SecondCombatSlot;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ThirdCombatSlot".
+        /// </summary>
+        public InputAction @ThirdCombatSlot => m_Wrapper.m_Player_ThirdCombatSlot;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -592,6 +670,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @FirstCombatSlot.started += instance.OnFirstCombatSlot;
+            @FirstCombatSlot.performed += instance.OnFirstCombatSlot;
+            @FirstCombatSlot.canceled += instance.OnFirstCombatSlot;
+            @SecondCombatSlot.started += instance.OnSecondCombatSlot;
+            @SecondCombatSlot.performed += instance.OnSecondCombatSlot;
+            @SecondCombatSlot.canceled += instance.OnSecondCombatSlot;
+            @ThirdCombatSlot.started += instance.OnThirdCombatSlot;
+            @ThirdCombatSlot.performed += instance.OnThirdCombatSlot;
+            @ThirdCombatSlot.canceled += instance.OnThirdCombatSlot;
         }
 
         /// <summary>
@@ -627,6 +714,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @FirstCombatSlot.started -= instance.OnFirstCombatSlot;
+            @FirstCombatSlot.performed -= instance.OnFirstCombatSlot;
+            @FirstCombatSlot.canceled -= instance.OnFirstCombatSlot;
+            @SecondCombatSlot.started -= instance.OnSecondCombatSlot;
+            @SecondCombatSlot.performed -= instance.OnSecondCombatSlot;
+            @SecondCombatSlot.canceled -= instance.OnSecondCombatSlot;
+            @ThirdCombatSlot.started -= instance.OnThirdCombatSlot;
+            @ThirdCombatSlot.performed -= instance.OnThirdCombatSlot;
+            @ThirdCombatSlot.canceled -= instance.OnThirdCombatSlot;
         }
 
         /// <summary>
@@ -819,6 +915,27 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInventory(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FirstCombatSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFirstCombatSlot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondCombatSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondCombatSlot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ThirdCombatSlot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThirdCombatSlot(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.

@@ -8,4 +8,5 @@ public interface IActionInput
     bool UseFirstQuickSlot { get; }
     bool UseSecondQuickSlot { get; }
     bool InventoryPressed { get; }
+    int SelectedCombatSlot { get; }
 }

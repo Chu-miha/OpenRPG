@@ -54,4 +54,23 @@ public class PlayerEquipmentService
 
         return true;
     }
+    
+    public bool UnequipToInventory(int equipmentSlotIndex, int inventorySlotIndex)
+    {
+        AttackableItem item = _equipment.GetCombatSlot(equipmentSlotIndex);
+
+        if (item == null)
+            return false;
+
+        if (!_inventory.AddItemToSlot(inventorySlotIndex, item))
+            return false;
+
+        if (!_equipment.TryUnequip(equipmentSlotIndex, out _))
+        {
+            _inventory.RemoveItemFromSlot(inventorySlotIndex);
+            return false;
+        }
+
+        return true;
+    }
 }

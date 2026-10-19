@@ -35,6 +35,17 @@ public class PlayerInventory
         _inventoryChanged.OnNext(Unit.Default);
         return true;
     }
+    
+    public bool AddItemToSlot(int slotIndex, Item item, int amount = 1)
+    {
+        bool added = _inventory.AddToSlot(slotIndex, item, amount);
+
+        if (!added)
+            return false;
+
+        _inventoryChanged.OnNext(Unit.Default);
+        return true;
+    }
 
     public bool RemoveItemFromInventory(Item item, int amount = 1)
     {

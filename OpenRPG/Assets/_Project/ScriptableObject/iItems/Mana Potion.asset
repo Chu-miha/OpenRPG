@@ -30,6 +30,7 @@ MonoBehaviour:
   <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: cd1aaaab40189ac49a84878e9989924f, type: 3}
   <Weight>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 20
   <Price>k__BackingField: 0
   _effects:
   - {fileID: -2878718729095002566}
